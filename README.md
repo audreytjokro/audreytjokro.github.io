@@ -1,4 +1,4 @@
-### Hi there, I'm Audrey 👋
+### Hi there, I'm Audrey
 
 ## About me
 
