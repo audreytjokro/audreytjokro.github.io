@@ -3,55 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Audrey's Portfolio">
-    <title>Audrey Tjokro - Portfolio</title>
+    <title>Audrey Tjokro - Space Travel Calendar</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Navigation -->
+    <!-- Navbar -->
     <nav>
-        <ul>
-            <li><a href="#about">About Me</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
+        <div class="container">
+            <a href="#" class="brand"><img src="logo.svg" alt="Calendar logo" class="logo"></a>
+            <ul class="nav-menu">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#cta">Request a Demo</a></li>
+                <li><a href="mailto:audreyct@uw.edu" class="cta">Sign up for the waitlist</a></li>
+            </ul>
+        </div>
     </nav>
 
     <!-- Header Section -->
-    <header>
-        <h1>Audrey Tjokro</h1>
-        <p>Software Engineering Graduate Student | Health Tech Enthusiast</p>
+    <header class="hero">
+        <div class="container">
+            <h1>A Calendar for Space Travel</h1>
+            <p>The scheduling tool to help you stay organized on Earth & beyond. Sync across all devices and never miss a meeting again.</p>
+            <a href="#cta" class="major-button">Join the waitlist for early access</a>
+        </div>
     </header>
 
-    <!-- About Section -->
-    <section id="about">
-        <h2>About Me</h2>
-        <p>Hi, I'm Audrey! I'm passionate about health tech and software engineering. This portfolio showcases some of the projects I’ve worked on and the skills I’ve developed throughout my journey.</p>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects">
-        <h2>Projects</h2>
-        <div class="project-card">
-            <h3>Project 1: Health Tracker App</h3>
-            <p>A mobile app designed to help users track their health metrics and improve their wellness.</p>
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2>Features for Every Need</h2>
+            <div class="feature-grid">
+                <div class="card">
+                    <img src="feature1.jpg" alt="Daily Digest">
+                    <h3>Daily Digest</h3>
+                    <p>Keep track of all your events effortlessly.</p>
+                </div>
+                <div class="card">
+                    <img src="feature2.jpg" alt="AI Assistant">
+                    <h3>AI Assistant</h3>
+                    <p>Let AI handle all rescheduling needs.</p>
+                </div>
+                <!-- Add more features -->
+            </div>
         </div>
-        <div class="project-card">
-            <h3>Project 2: Nutrition Database API</h3>
-            <p>An API that provides detailed nutritional information for thousands of foods and recipes.</p>
+    </section>
+
+    <!-- Call-to-Action Section -->
+    <section id="cta" class="cta">
+        <div class="container">
+            <h2>Request a Demo</h2>
+            <form action="#">
+                <input type="text" name="name" placeholder="Your Name" required>
+                <input type="email" name="email" placeholder="Your Email" required>
+                <button type="submit">Submit</button>
+            </form>
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact">
-        <h2>Contact Me</h2>
-        <p>Email: audreychristabel@gmail.com</p>
-        <p>LinkedIn: <a href="https://linkedin.com/in/audreyct">linkedin.com/in/audreyct</a></p>
-    </section>
-
+    <!-- Footer -->
     <footer>
-        <p>&copy; 2024 Audrey Tjokro. All rights reserved.</p>
+        <div class="container">
+            <img src="logo.svg" alt="Calendar logo" class="footer-logo">
+            <p>&copy; 2040 Calendar. All rights reserved.</p>
+        </div>
     </footer>
 
 </body>
