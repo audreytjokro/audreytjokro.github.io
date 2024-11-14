@@ -20,4 +20,3 @@ social: true # includes social icons at the bottom of the page
 
 I’m Audrey, a Master's student at Cornell Tech studying Information Science with a focus in Health! I am interested in 3D computer vision, AR/VR, and creating immersive experiences. 
 
-Link to your social media connections, too. This theme is set up to use [Font Awesome icons](https://fontawesome.com/) and [Academicons](https://jpswalsh.github.io/academicons/), like the ones below. Add your Facebook, Twitter, LinkedIn, Google Scholar, or just disable all of them.
