@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Upcoming Research Project"
-date: 2025-08-15 00:00:00 +0000
+date: 2025-05-15 00:00:00 +0000
 image: /images/placeholder.jpg
 categories: research
 course: Cornell Tech
