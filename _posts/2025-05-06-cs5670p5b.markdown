@@ -1,0 +1,15 @@
+---
+layout: post
+title:  "More Diffusion Models"
+date:   2025-05-06 21:21:53 +00:00
+image: /images/cs5670p5b.png
+categories: Cornell
+author: "Audrey Tjokro"
+course: "CS5670: Computer Vision"
+---
+
+In this second part of the <a href="https://www.cs.cornell.edu/courses/cs5670/2025sp/projects/5_project/partB.html">project</a>, I implemented and trained diffusion models from scratch on the MNIST dataset. 
+I began by building a UNet for one-step denoising and then extended it into a time-conditioned denoising diffusion probabilistic model (DDPM). 
+I trained the model to iteratively denoise noisy digits, resulting in realistic image generation from pure noise. 
+Later, I incorporated class-conditioning to guide the model to generate specific digits using classifier-free guidance. 
+Through this project, I gained deeper insights into diffusion model training, time-conditioning, and controllable image synthesis.
