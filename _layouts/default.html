@@ -134,7 +134,7 @@
           {% for cat in post.categories %}
           {% assign cutoff = '2024-01-01' | date: "%s" %}
           {% assign post_date = post.date | date: "%s" %}
-          {% if cat != 'research' and cat != 'Intel' % and post.date >= cutoff %}
+          {% if cat != 'research' and post.date >= cutoff %}
           <tr>
             <td style="padding:2.5%;width:25%;vertical-align:middle;min-width:120px">
               <img src="/tn{{post.image}}" alt="project image" style="width:auto; height:auto; max-width:100%;" />
