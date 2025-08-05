@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CS5670 Project 1: Hybrid Images</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Source Sans Pro', Helvetica, sans-serif;
+            background: #fff;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            font-weight: 300;
+            margin: 0 0 10px 0;
+            color: #2c3e50;
+        }
+        
+        .header .subtitle {
+            font-size: 1.2em;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+        }
+        
+        .nav-back {
+            text-align: left;
+            margin-bottom: 30px;
+        }
+        
+        .nav-back a {
+            color: #3498db;
+            text-decoration: none;
+            font-size: 0.9em;
+        }
+        
+        .nav-back a:hover {
+            text-decoration: underline;
+        }
+        
+        .project-overview {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        
+        .demo-image {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .demo-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .demo-image .caption {
+            font-style: italic;
+            color: #7f8c8d;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+        
+        h2 {
+            color: #2c3e50;
+            font-weight: 400;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+        
+        h3 {
+            color: #34495e;
+            font-weight: 400;
+            margin-top: 30px;
+        }
+        
+        .key-info {
+            background: #e8f4fd;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .key-info h3 {
+            margin-top: 0;
+            color: #2980b9;
+        }
+        
+        .key-info table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .key-info td {
+            padding: 8px 0;
+            vertical-align: top;
+        }
+        
+        .key-info td:first-child {
+            font-weight: 600;
+            width: 150px;
+        }
+        
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .result-item {
+            text-align: center;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .result-item img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        
+        .result-item .label {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .result-item .description {
+            font-size: 0.9em;
+            color: #7f8c8d;
+        }
+        
+        .implementation-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+        
+        .function-list {
+            background: #fff;
+            padding: 20px;
+            border-radius: 6px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .function-list ol {
+            margin: 0;
+            padding-left: 20px;
+        }
+        
+        .function-list li {
+            margin: 8px 0;
+            font-family: 'Courier New', monospace;
+            background: #f1f2f6;
+            padding: 5px 8px;
+            border-radius: 4px;
+        }
+        
+        .my-results {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+        
+        .my-results h3 {
+            color: #856404;
+            margin-top: 0;
+        }
+        
+        .placeholder {
+            background: #e9ecef;
+            border: 2px dashed #adb5bd;
+            padding: 40px;
+            text-align: center;
+            border-radius: 8px;
+            color: #6c757d;
+            margin: 20px 0;
+        }
+        
+        .placeholder.image {
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        
+        .placeholder .icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+        
+        .scales-demo {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .scales-demo .scale-row {
+            margin: 15px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .scales-demo .scale-label {
+            min-width: 80px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav-back">
+            <a href="../index.html">← Back to Projects</a>
+        </div>
+        
+        <div class="header">
+            <h1>Hybrid Images</h1>
+            <div class="subtitle">CS5670 Project 1 - Introduction to Computer Vision</div>
+            <div class="subtitle">Cornell University, Spring 2025</div>
+        </div>
+        
+        <div class="project-overview">
+            <p><strong>Look at the image from very close and then very far. What do you see?</strong></p>
+            <p>This project implements image filtering functions to create hybrid images using the technique from the SIGGRAPH 2006 paper by Oliva, Torralba, and Schyns. Hybrid images are static images that change interpretation based on viewing distance - high frequencies dominate close viewing while low frequencies are visible from far away.</p>
+        </div>
+        
+        <div class="demo-image">
+            <img src="../images/hybrid-after.png" alt="Hybrid Image Result" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+            <div class="caption">Move closer and farther from the screen to see the effect!</div>
+        </div>
+        
+        <div class="key-info">
+            <h3>Project Details</h3>
+            <table>
+                <tr>
+                    <td>Language:</td>
+                    <td>Python with NumPy</td>
+                </tr>
+                <tr>
+                    <td>Key Concepts:</td>
+                    <td>Image filtering, Gaussian blur, frequency domain</td>
+                </tr>
+            </table>
+        </div>
+        
+        <h2>Overview</h2>
+        <p>The goal of this assignment was to write image filtering functions from scratch and use them to create hybrid images. The basic principle is that high frequency components tend to dominate perception when available, but at distance, only low frequency (smooth) components are visible. By blending the high frequency portion of one image with the low-frequency portion of another, we create images that change interpretation based on viewing distance.</p>
+        
+        <h2>Implementation</h2>
+        <div class="implementation-section">
+            <p>This project required implementing 5 core functions, each building on the previous:</p>
+            <div class="function-list">
+                <ol>
+                    <li>cross_correlation_2d</li>
+                    <li>convolve_2d</li>
+                    <li>gaussian_blur_kernel_2d</li>
+                    <li>low_pass</li>
+                    <li>high_pass</li>
+                </ol>
+            </div>
+            
+            <h3>Image Filtering</h3>
+            <p>Implemented cross-correlation and convolution from scratch using for loops and NumPy vectorization, without using any pre-built filtering functions. This provided fundamental understanding of how spatial filters work at the pixel level.</p>
+            
+            <h3>Gaussian Blur</h3>
+            <p>Created a 2D Gaussian kernel generator that produces weighted averaging kernels for smooth blurring effects. The kernel size and standard deviation (sigma) control the amount of blurring.</p>
+            
+            <h3>Frequency Filtering</h3>
+            <p>Implemented high-pass and low-pass filters using Gaussian blur. Low-pass filters remove fine details (keep coarse features), while high-pass filters retain only fine details by subtracting the blurred version from the original.</p>
+        </div>
+        
+        <h2>My Results</h2>
+        <div class="my-results">
+            <h3>My Implementation Results</h3>
+            <p><strong>Parameters used:</strong></p>
+            <div class="placeholder">
+                Add your specific parameters here:
+                <br>• right_size: 8.0
+                <br>• left_size: 13.0
+                <br>• right_sigma: 4.1
+                <br>• left_sigma: 7.0
+                <br>• mixin_ratio: 0.65
+                <br>• scale_factor: 2.0
+            </div>
+        </div>
+        
+        <div class="results-grid">
+            <div class="result-item">
+                <img src="../images/left.jpeg" alt="Original Left Image" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                <div class="label">Original Left Image</div>
+            </div>
+            Z
+            <div class="result-item">
+                <img src="../images/right.jpeg" alt="Original Right Image" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                <div class="label">Original Right Image</div>
+            </div>
+        </div>
+        
+        <h3>Processing Steps</h3>
+        <div class="results-grid">
+            <div class="result-item">
+                <img src="../images/image-blurred.jpeg" alt="Low-Pass Filtered Image" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                <div class="label">Low-Pass Filtered</div>
+                <div class="description">Blurred version (coarse features)</div>
+            </div>
+            
+            <div class="result-item">
+                <img src="../images/image-edge.jpeg" alt="High-Pass Filtered Image" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                <div class="label">High-Pass Filtered</div>
+                <div class="description">Edge details only</div>
+            </div>
+        </div>
+        
+        <h3>Final Hybrid Image at Different Scales</h3>
+        <div class="scales-demo">
+            <p>The effect becomes more apparent when viewing the image at different scales:</p>
+            <div class="scale-row">
+                <div class="scale-label">Full Size:</div>
+                <img src="../images/hybrid-after.png" alt="Full-size Hybrid Image" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+            </div>
+            <div class="scale-row">
+                <div class="scale-label">Half Size:</div>
+                <img src="../images/hybrid-after.png" alt="Half-size Hybrid Image" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+            </div>
+            <div class="scale-row">
+                <div class="scale-label">Quarter Size:</div>
+                <img src="../images/hybrid-after.png" alt="Quarter-size Hybrid Image" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+            </div>
+        </div>
+        
+        <h2>Key Learnings</h2>
+        <div class="implementation-section">
+            <ul>
+                <li><strong>Spatial Domain Filtering:</strong> Gained hands-on experience implementing convolution and cross-correlation from first principles</li>
+                <li><strong>Frequency Analysis:</strong> Understanding how high and low frequency components affect image perception</li>
+                <li><strong>Parameter Tuning:</strong> Learning to adjust sigma values and kernel sizes for optimal hybrid effects</li>
+                <li><strong>Python/NumPy:</strong> Developing efficient image processing code using vectorized operations</li>
+            </ul>
+        </div>
+        
+        <h2>Technical Details</h2>
+        <div class="key-info">
+            <h3>Implementation Constraints</h3>
+            <p><strong>Forbidden Functions:</strong> No NumPy, SciPy, OpenCV, or other pre-built filtering functions allowed. Only basic operations like np.shape, np.zeros, np.transpose, np.flip, and np.pad were permitted.</p>
+            <p><strong>Core Challenge:</strong> Implementing all filtering operations using for loops and NumPy vectorization to understand the underlying mathematics.</p>
+        </div>
+        
+        <div class="nav-back" style="margin-top: 50px; text-align: center;">
+            <a href="../index.html">← Back to All Projects</a>
+        </div>
+    </div>
+</body>
+</html>

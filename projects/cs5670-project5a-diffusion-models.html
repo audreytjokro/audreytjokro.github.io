@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CS5670 Project 5A: The Power of Diffusion Models</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Source Sans Pro', Helvetica, sans-serif;
+            background: #fff;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            font-weight: 300;
+            margin: 0 0 10px 0;
+            color: #2c3e50;
+        }
+        
+        .header .subtitle {
+            font-size: 1.2em;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+        }
+        
+        .nav-back {
+            text-align: left;
+            margin-bottom: 30px;
+        }
+        
+        .nav-back a {
+            color: #3498db;
+            text-decoration: none;
+            font-size: 0.9em;
+        }
+        
+        .nav-back a:hover {
+            text-decoration: underline;
+        }
+        
+        .project-overview {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        
+        .demo-image {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .demo-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .demo-image .caption {
+            font-style: italic;
+            color: #7f8c8d;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+        
+        h2 {
+            color: #2c3e50;
+            font-weight: 400;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+        
+        h3 {
+            color: #34495e;
+            font-weight: 400;
+            margin-top: 30px;
+        }
+        
+        .key-info {
+            background: #e8f4fd;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .key-info h3 {
+            margin-top: 0;
+            color: #2980b9;
+        }
+        
+        .key-info table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .key-info td {
+            padding: 8px 0;
+            vertical-align: top;
+        }
+        
+        .key-info td:first-child {
+            font-weight: 600;
+            width: 150px;
+        }
+        
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+        }
+        
+        .result-item {
+            text-align: center;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .result-item img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        
+        .result-item .label {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+        }
+        
+        .result-item .description {
+            font-size: 0.8em;
+            color: #7f8c8d;
+        }
+        
+        .implementation-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+        
+        .math-section {
+            background: #fff;
+            padding: 20px;
+            border-radius: 6px;
+            border-left: 4px solid #9b59b6;
+            margin: 20px 0;
+        }
+        
+        .algorithm-steps {
+            background: #fff;
+            padding: 20px;
+            border-radius: 6px;
+            border-left: 4px solid #e74c3c;
+        }
+        
+        .algorithm-steps ol {
+            margin: 0;
+            padding-left: 20px;
+        }
+        
+        .algorithm-steps li {
+            margin: 12px 0;
+            line-height: 1.6;
+        }
+        
+        .diffusion-pipeline {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .pipeline-step {
+            background: #fff;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+            border: 2px solid #ecf0f1;
+            position: relative;
+        }
+        
+        .pipeline-step h4 {
+            margin: 0 0 10px 0;
+            color: #2c3e50;
+            font-size: 0.9em;
+        }
+        
+        .pipeline-step .step-number {
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            background: #8e44ad;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+        
+        .my-results {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+        
+        .my-results h3 {
+            color: #856404;
+            margin-top: 0;
+        }
+        
+        .deepfloyd-section {
+            background: #fef7f0;
+            border: 1px solid #f4d5a7;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+            border-left: 4px solid #e67e22;
+        }
+        
+        .deepfloyd-section h3 {
+            color: #d35400;
+            margin-top: 0;
+        }
+        
+        .noise-progression {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .noise-item {
+            text-align: center;
+            background: #fff;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #ecf0f1;
+        }
+        
+        .noise-item img {
+            width: 100%;
+            border-radius: 4px;
+        }
+        
+        .noise-item .timestep {
+            font-weight: bold;
+            color: #e74c3c;
+            font-size: 0.9em;
+        }
+        
+        .denoising-comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .denoise-method {
+            background: #fff;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+            border: 2px solid #ecf0f1;
+        }
+        
+        .denoise-method.neural {
+            border-color: #27ae60;
+        }
+        
+        .denoise-method.classical {
+            border-color: #e74c3c;
+        }
+        
+        .denoise-method h4 {
+            margin: 0 0 10px 0;
+            color: #2c3e50;
+        }
+        
+        .cfg-section {
+            background: #f0f9ff;
+            border: 1px solid #bfdbfe;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+            border-left: 4px solid #3b82f6;
+        }
+        
+        .cfg-section h3 {
+            color: #1e40af;
+            margin-top: 0;
+        }
+        
+        .creative-applications {
+            background: #f1f8ff;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 30px 0;
+            border-left: 4px solid #0366d6;
+        }
+        
+        .creative-applications h3 {
+            margin-top: 0;
+            color: #0366d6;
+        }
+        
+        .application-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .application-card {
+            background: #fff;
+            padding: 20px;
+            border-radius: 6px;
+            border: 1px solid #d1ecf1;
+        }
+        
+        .application-card h4 {
+            margin: 0 0 15px 0;
+            color: #0c5460;
+            border-bottom: 1px solid #d1ecf1;
+            padding-bottom: 10px;
+        }
+        
+        .inpainting-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .inpaint-item {
+            text-align: center;
+            background: #fff;
+            padding: 10px;
+            border-radius: 6px;
+        }
+        
+        .visual-anagram-section {
+            background: #ffeef0;
+            border: 1px solid #f5c6cb;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+            border-left: 4px solid #dc3545;
+        }
+        
+        .visual-anagram-section h3 {
+            color: #721c24;
+            margin-top: 0;
+        }
+        
+        .hybrid-section {
+            background: #e8f5e8;
+            border: 1px solid #c3e6c3;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+            border-left: 4px solid #28a745;
+        }
+        
+        .hybrid-section h3 {
+            color: #155724;
+            margin-top: 0;
+        }
+        
+        .flip-demo {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .flip-item {
+            text-align: center;
+            background: #fff;
+            padding: 15px;
+            border-radius: 6px;
+        }
+        
+        .extra-credit-section {
+            background: #fff9e6;
+            border: 1px solid #ffe066;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+            border-left: 4px solid #ffd700;
+        }
+        
+        .extra-credit-section h3 {
+            color: #b8860b;
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav-back">
+            <a href="../index.html">← Back to Projects</a>
+        </div>
+        
+        <div class="header">
+            <h1>The Power of Diffusion Models</h1>
+            <div class="subtitle">CS5670 Project 5A - Introduction to Computer Vision</div>
+            <div class="subtitle">Cornell University, Spring 2025</div>
+        </div>
+        
+        <div class="project-overview">
+            <p><strong>Implement and deploy diffusion models for creative image generation tasks.</strong></p>
+            <p>This project provides hands-on experience with pre-trained diffusion models, implementing the complete sampling loop and applying it to cutting-edge applications like inpainting, visual anagrams, and hybrid images. Using the powerful DeepFloyd IF model, we explore how diffusion models revolutionize generative AI.</p>
+        </div>
+        
+        <div class="demo-image">
+            <img src="../images/diffusion-showcase-grid.png" alt="Diffusion Model Applications Showcase" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+            <div class="caption">Creative applications: Inpainting, visual anagrams, hybrid images, and image-to-image translation</div>
+        </div>
+        
+        <div class="key-info">
+            <h3>Project Details</h3>
+            <table>
+                <tr>
+                    <td>Assigned:</td>
+                    <td>Thursday, April 17, 2025</td>
+                </tr>
+                <tr>
+                    <td>Due:</td>
+                    <td>Friday, April 25, 2025 (Part A)</td>
+                </tr>
+                <tr>
+                    <td>Individual Work:</td>
+                    <td>Must be completed individually</td>
+                </tr>
+                <tr>
+                    <td>Platform:</td>
+                    <td>Google Colab with DeepFloyd IF</td>
+                </tr>
+                <tr>
+                    <td>Key Concepts:</td>
+                    <td>Sampling loops, CFG, inpainting, visual illusions</td>
+                </tr>
+            </table>
+        </div>
+        
+        <h2>Overview</h2>
+        <p>Diffusion models represent the current state-of-the-art in generative AI, powering tools like DALL-E, Midjourney, and Stable Diffusion. This project demystifies how these models work by implementing the core sampling algorithms and exploring their creative applications.</p>
+        
+        <p>We use DeepFloyd IF, a powerful two-stage diffusion model that generates high-quality images from text prompts. Through hands-on implementation, we learn how noise is iteratively refined into coherent, photorealistic images.</p>
+        
+        <h2>DeepFloyd IF Architecture</h2>
+        
+        <div class="deepfloyd-section">
+            <h3>Two-Stage Generation Pipeline</h3>
+            <p>DeepFloyd IF uses a cascaded approach for high-resolution image generation:</p>
+            
+            <div class="diffusion-pipeline">
+                <div class="pipeline-step">
+                    <div class="step-number">1</div>
+                    <h4>Stage I Model</h4>
+                    <p>64×64 pixel generation with text conditioning</p>
+                </div>
+                
+                <div class="pipeline-step">
+                    <div class="step-number">2</div>
+                    <h4>Stage II Model</h4>
+                    <p>Super-resolution upsampling to 256×256 pixels</p>
+                </div>
+            </div>
+            
+            <p><strong>Text Conditioning:</strong> Both stages are conditioned on text embeddings, allowing precise control over generated content through natural language prompts.</p>
+        </div>
+        
+        <h2>Implementation Details</h2>
+        
+        <h3>Part 1: Forward Process and Noise Addition</h3>
+        <div class="implementation-section">
+            <p>The forward process systematically adds Gaussian noise to clean images, creating a sequence from pure image to pure noise.</p>
+            
+            <div class="math-section">
+                <h4>Forward Process Mathematics:</h4>
+                <img src="../images/diffusion-forward-process-equation.png" alt="Forward Process Equation" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                
+                <p><strong>Key Insight:</strong> The forward process is not just adding noise—we also scale the image by √ᾱₜ to maintain proper variance throughout the diffusion process.</p>
+            </div>
+            
+            <div class="noise-progression">
+                <div class="noise-item">
+                    <img src="../images/diffusion-cornell-original.png" alt="Original Cornell Tower" style="max-width: 100%; height: auto; border-radius: 4px;">
+                    <div class="timestep">t = 0</div>
+                    <div class="description">Original</div>
+                </div>
+                
+                <div class="noise-item">
+                    <img src="../images/diffusion-cornell-t250.png" alt="Cornell Tower t=250" style="max-width: 100%; height: auto; border-radius: 4px;">
+                    <div class="timestep">t = 250</div>
+                    <div class="description">Light noise</div>
+                </div>
+                
+                <div class="noise-item">
+                    <img src="../images/diffusion-cornell-t500.png" alt="Cornell Tower t=500" style="max-width: 100%; height: auto; border-radius: 4px;">
+                    <div class="timestep">t = 500</div>
+                    <div class="description">Medium noise</div>
+                </div>
+                
+                <div class="noise-item">
+                    <img src="../images/diffusion-cornell-t750.png" alt="Cornell Tower t=750" style="max-width: 100%; height: auto; border-radius: 4px;">
+                    <div class="timestep">t = 750</div>
+                    <div class="description">Heavy noise</div>
+                </div>
+            </div>
+        </div>
+        
+        <h3>Part 2: Denoising Comparison</h3>
+        <div class="implementation-section">
+            <p>Comparing classical denoising methods with neural diffusion approaches reveals the power of learned priors.</p>
+            
+            <div class="denoising-comparison">
+                <div class="denoise-method classical">
+                    <h4>Gaussian Blur Denoising</h4>
+                    <img src="../images/diffusion-gaussian-denoise-t250.png" alt="Gaussian Denoising t=250" style="max-width: 100%; height: auto; border-radius: 4px;">
+                    <p>Classical method - removes noise but loses detail</p>
+                </div>
+                
+                <div class="denoise-method neural">
+                    <h4>One-Step Neural Denoising</h4>
+                    <img src="../images/diffusion-onestep-denoise-t250.png" alt="Neural Denoising t=250" style="max-width: 100%; height: auto; border-radius: 4px;">
+                    <p>Neural method - preserves structure and semantics</p>
+                </div>
+                
+                <div class="denoise-method neural">
+                    <h4>Iterative Neural Denoising</h4>
+                    <img src="../images/diffusion-iterative-denoise-result.png" alt="Iterative Denoising Result" style="max-width: 100%; height: auto; border-radius: 4px;">
+                    <p>Best quality - gradual refinement</p>
+                </div>
+            </div>
+        </div>
+        
+        <h3>Part 3: Iterative Sampling Algorithm</h3>
+        <div class="implementation-section">
+            <p>The core of diffusion model generation: iteratively removing noise while maintaining image coherence.</p>
+            
+            <div class="algorithm-steps">
+                <h4>DDPM Sampling Algorithm:</h4>
+                <ol>
+                    <li><strong>Initialize:</strong> Start with pure Gaussian noise x_T</li>
+                    <li><strong>Predict:</strong> Use UNet to estimate noise ε_θ(x_t, t)</li>
+                    <li><strong>Denoise:</strong> Compute denoised prediction x_0</li>
+                    <li><strong>Step:</strong> Calculate x_{t-1} using DDPM reverse process</li>
+                    <li><strong>Iterate:</strong> Repeat until reaching clean image x_0</li>
+                </ol>
+            </div>
+            
+            <div class="math-section">
+                <h4>DDPM Reverse Process:</h4>
+                <img src="../images/diffusion-reverse-process-equation.png" alt="Reverse Process Mathematics" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+            </div>
+            
+            <div class="results-grid">
+                <div class="result-item">
+                    <img src="../images/diffusion-sample-1.png" alt="Generated Sample 1" style="max-width: 100%; height: auto; border-radius: 4px;">
+                    <div class="label">Sample 1</div>
+                </div>
+                
+                <div class="result-item">
+                    <img src="../images/diffusion-sample-2.png" alt="Generated Sample 2" style="max-width: 100%; height: auto; border-radius: 4px;">
+                    <div class="label">Sample 2</div>
+                </div>
+                
+                <div class="result-item">
+                    <img src="../images/diffusion-sample-3.png" alt="Generated Sample 3" style="max-width: 100%; height: auto; border-radius: 4px;">
+                    <div class="label">Sample 3</div>
+                </div>
+                
+                <div class="result-item">
+                    <img src="../images/diffusion-sample-4.png" alt="Generated Sample 4" style="max-width: 100%; height: auto; border-radius: 4px;">
+                    <div class="label">Sample 4</div>
+                </div>
+                
+                <div class="result-item">
+                    <img src="../images/diffusion-sample-5.png" alt="Generated Sample 5" style="max-width: 100%; height: auto; border-radius: 4px;">
+                    <div class="label">Sample 5</div>
+                </div>
+            </div>
+        </div>
+        
+        <h3>Part 4: Classifier-Free Guidance (CFG)</h3>
+        <div class="cfg-section">
+            <h3>Enhanced Generation Quality</h3>
+            <p>CFG dramatically improves image quality by combining conditional and unconditional predictions.</p>
+            
+            <div class="math-section">
+                <h4>CFG Formula:</h4>
+                <img src="../images/diffusion-cfg-equation.png" alt="Classifier-Free Guidance Equation" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                
+                <p><strong>Magic Parameter:</strong> γ > 1 extrapolates beyond the conditional estimate, leading to higher quality but potentially less diverse results.</p>
+            </div>
+            
+            <div class="results-grid">
+                <div class="result-item">
+                    <img src="../images/diffusion-cfg-sample-1.png" alt="CFG Sample 1" style="max-width: 100%; height: auto; border-radius: 4px;">
+                    <div class="label">CFG Sample 1</div>
+                    <div class="description">γ = 7.5</div>
+                </div>
+                
+                <div class="result-item">
+                    <img src="../images/diffusion-cfg-sample-2.png" alt="CFG Sample 2" style="max-width: 100%; height: auto; border-radius: 4px;">
+                    <div class="label">CFG Sample 2</div>
+                    <div class="description">Higher quality</div>
+                </div>
+                
+                <div class="result-item">
+                    <img src="../images/diffusion-cfg-sample-3.png" alt="CFG Sample 3" style="max-width: 100%; height: auto; border-radius: 4px;">
+                    <div class="label">CFG Sample 3</div>
+                    <div class="description">Sharper details</div>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Creative Applications</h2>
+        
+        <h3>Image-to-Image Translation (SDEdit)</h3>
+        <div class="implementation-section">
+            <p>By adding controlled amounts of noise and then denoising, we can edit existing images while preserving their core structure.</p>
+            
+            <div class="results-grid">
+                <div class="result-item">
+                    <img src="../images/diffusion-sdedit-start1.png" alt="SDEdit i_start=1" style="max-width: 100%; height: auto; border-radius: 4px;">
+                    <div class="label">i_start = 1</div>
+                    <div class="description">Minimal editing</div>
+                </div>
+                
+                <div class="result-item">
+                    <img src="../images/diffusion-sdedit-start5.png" alt="SDEdit i_start=5" style="max-width: 100%; height: auto; border-radius: 4px;">
+                    <div class="label">i_start = 5</div>
+                    <div class="description">Moderate changes</div>
+                </div>
+                
+                <div class="result-item">
+                    <img src="../images/diffusion-sdedit-start10.png" alt="SDEdit i_start=10" style="max-width: 100%; height: auto; border-radius: 4px;">
+                    <div class="label">i_start = 10</div>
+                    <div class="description">Significant edits</div>
+                </div>
+                
+                <div class="result-item">
+                    <img src="../images/diffusion-sdedit-start20.png" alt="SDEdit i_start=20" style="max-width: 100%; height: auto; border-radius: 4px;">
+                    <div class="label">i_start = 20</div>
+                    <div class="description">Major transformation</div>
+                </div>
+            </div>
+        </div>
+        
+        <h3>Hand-Drawn to Photorealistic</h3>
+        <div class="implementation-section">
+            <p>Transform sketches and drawings into photorealistic images by projecting them onto the natural image manifold.</p>
+            
+            <div class="results-grid">
+                <div class="result-item">
+                    <img src="../images/diffusion-sketch-bear-original.png" alt="Original Bear Sketch" style="max-width: 100%; height: auto; border-radius: 4px;">
+                    <div class="label">Original Sketch</div>
+                    <div class="description">Hand-drawn input</div>
+                </div>
+                
+                <div class="result-item">
+                    <img src="../images/diffusion-sketch-bear-result.png" alt="Bear Sketch Result" style="max-width: 100%; height: auto; border-radius: 4px;">
+                    <div class="label">Photorealistic Result</div>
+                    <div class="description">Natural image manifold</div>
+                </div>
+                
+                <div class="result-item">
+                    <img src="../images/diffusion-sketch-house-original.png" alt="Original House Sketch" style="max-width: 100%; height: auto; border-radius: 4px;">
+                    <div class="label">House Sketch</div>
+                    <div class="description">Simple line drawing</div>
+                </div>
+                
+                <div class="result-item">
+                    <img src="../images/diffusion-sketch-house-result.png" alt="House Sketch Result" style="max-width: 100%; height: auto; border-radius: 4px;">
+                    <div class="label">Realistic House</div>
+                    <div class="description">Architectural detail</div>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Advanced Creative Techniques</h2>
+        
+        <div class="creative-applications">
+            <h3>Cutting-Edge Applications</h3>
+            
+            <div class="application-grid">
+                <div class="application-card">
+                    <h4>Inpainting (RePaint Algorithm)</h4>
+                    <div class="inpainting-demo">
+                        <div class="inpaint-item">
+                            <img src="../images/diffusion-inpaint-original.png" alt="Cornell Tower Original" style="max-width: 100%; height: auto; border-radius: 4px;">
+                            <div class="label">Original</div>
+                        </div>
+                        
+                        <div class="inpaint-item">
+                            <img src="../images/diffusion-inpaint-mask.png" alt="Inpainting Mask" style="max-width: 100%; height: auto; border-radius: 4px;">
+                            <div class="label">Mask</div>
+                        </div>
+                        
+                        <div class="inpaint-item">
+                            <img src="../images/diffusion-inpaint-result.png" alt="Inpainting Result" style="max-width: 100%; height: auto; border-radius: 4px;">
+                            <div class="label">Inpainted</div>
+                        </div>
+                    </div>
+                    
+                    <p><strong>Algorithm:</strong> During each denoising step, force pixels outside the mask to match the original image with appropriate noise level.</p>
+                </div>
+                
+                <div class="application-card">
+                    <h4>Text-Conditional Editing</h4>
+                    <div class="results-grid">
+                        <div class="result-item">
+                            <img src="../images/diffusion-text-edit-mountain.png" alt="Snowy Mountain Edit" style="max-width: 100%; height: auto; border-radius: 4px;">
+                            <div class="label">Snowy Mountain</div>
+                            <div class="description">Guided by text prompt</div>
+                        </div>
+                    </div>
+                    
+                    <p><strong>Technique:</strong> Replace "a high quality photo" with specific prompts to guide the manifold projection toward desired content.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="visual-anagram-section">
+            <h3>Visual Anagrams - Optical Illusions</h3>
+            <p>Create images that reveal different content when flipped upside down by averaging noise estimates from both orientations.</p>
+            
+            <div class="math-section">
+                <h4>Visual Anagram Algorithm:</h4>
+                <img src="../images/diffusion-visual-anagram-equation.png" alt="Visual Anagram Mathematics" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+            </div>
+            
+            <div class="flip-demo">
+                <div class="flip-item">
+                    <img src="../images/diffusion-anagram-oldman.png" alt="Old Man Upright" style="max-width: 100%; height: auto; border-radius: 4px;">
+                    <div class="label">Upright View</div>
+                    <div class="description">"An oil painting of an old man"</div>
+                </div>
+                
+                <div class="flip-item">
+                    <img src="../images/diffusion-anagram-campfire.png" alt="Campfire Flipped" style="max-width: 100%; height: auto; border-radius: 4px;">
+                    <div class="label">Flipped 180°</div>
+                    <div class="description">"An oil painting of people around a campfire"</div>
+                </div>
+            </div>
+            
+            <p><strong>Innovation:</strong> This technique demonstrates the compositional nature of diffusion model representations and their ability to encode multiple interpretations simultaneously.</p>
+        </div>
+        
+        <div class="hybrid-section">
+            <h3>Hybrid Images with Diffusion</h3>
+            <p>Combine high and low frequency components from different noise estimates to create hybrid images that change appearance based on viewing distance.</p>
+            
+            <div class="math-section">
+                <h4>Factorized Diffusion Formula:</h4>
+                <img src="../images/diffusion-hybrid-equation.png" alt="Hybrid Image Mathematics" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+            </div>
+            
+            <div class="demo-image">
+                <img src="../images/diffusion-hybrid-skull-waterfall.png" alt="Skull Waterfall Hybrid" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                <div class="caption">Hybrid image: skull from far away, waterfall from close up</div>
+            </div>
+            
+            <div class="results-grid">
+                <div class="result-item">
+                    <img src="../images/diffusion-hybrid-result-1.png" alt="Hybrid Result 1" style="max-width: 100%; height: auto; border-radius: 4px;">
+                    <div class="label">Custom Hybrid 1</div>
+                </div>
+                
+                <div class="result-item">
+                    <img src="../images/diffusion-hybrid-result-2.png" alt="Hybrid Result 2" style="max-width: 100%; height: auto; border-radius: 4px;">
+                    <div class="label">Custom Hybrid 2</div>
+                </div>
+            </div>
+        </div>
+        
+        <h2>My Results</h2>
+        
+        <div class="my-results">
+            <h3>Implementation Achievements</h3>
+            <p>Successfully implemented the complete diffusion sampling pipeline with all creative applications, demonstrating mastery of both the underlying mathematics and practical implementation challenges.</p>
+        </div>
+        
+        <h3>Technical Implementation Highlights</h3>
+        <div class="implementation-section">
+            <ul>
+                <li><strong>Forward Process:</strong> Implemented noise addition with proper variance scaling using alphas_cumprod coefficients</li>
+                <li><strong>UNet Integration:</strong> Successfully interfaced with DeepFloyd's pretrained models including tensor device management and data type handling</li>
+                <li><strong>Iterative Sampling:</strong> Built complete DDPM sampling loop with strided timesteps for efficient generation</li>
+                <li><strong>CFG Implementation:</strong> Achieved significant quality improvements through classifier-free guidance</li>
+                <li><strong>Creative Applications:</strong> Successful implementation of inpainting, visual anagrams, and hybrid images</li>
+            </ul>
+        </div>
+        
+        <h3>Inpainting Results</h3>
+        <div class="results-grid">
+            <div class="result-item">
+                <img src="../images/diffusion-my-inpaint-1-original.png" alt="My Inpainting Original 1" style="max-width: 100%; height: auto; border-radius: 4px;">
+                <div class="label">Original Image 1</div>
+            </div>
+            
+            <div class="result-item">
+                <img src="../images/diffusion-my-inpaint-1-result.png" alt="My Inpainting Result 1" style="max-width: 100%; height: auto; border-radius: 4px;">
+                <div class="label">Inpainted Result 1</div>
+            </div>
+            
+            <div class="result-item">
+                <img src="../images/diffusion-my-inpaint-2-original.png" alt="My Inpainting Original 2" style="max-width: 100%; height: auto; border-radius: 4px;">
+                <div class="label">Original Image 2</div>
+            </div>
+            
+            <div class="result-item">
+                <img src="../images/diffusion-my-inpaint-2-result.png" alt="My Inpainting Result 2" style="max-width: 100%; height: auto; border-radius: 4px;">
+                <div class="label">Inpainted Result 2</div>
+            </div>
+        </div>
+        
+        <h3>Visual Anagram Creations</h3>
+        <div class="results-grid">
+            <div class="result-item">
+                <img src="../images/diffusion-my-anagram-1.png" alt="My Visual Anagram 1" style="max-width: 100%; height: auto; border-radius: 4px;">
+                <div class="label">Custom Anagram 1</div>
+                <div class="description">Dual interpretation illusion</div>
+            </div>
+            
+            <div class="result-item">
+                <img src="../images/diffusion-my-anagram-2.png" alt="My Visual Anagram 2" style="max-width: 100%; height: auto; border-radius: 4px;">
+                <div class="label">Custom Anagram 2</div>
+                <div class="description">Flip to reveal hidden image</div>
+            </div>
+        </div>
+        
+        <div class="extra-credit-section">
+            <h3>Extra Credit: Creative Explorations</h3>
+            <div class="results-grid">
+                <div class="result-item">
+                    <img src="../images/diffusion-extra-credit-1.png" alt="Extra Credit Creation 1" style="max-width: 100%; height: auto; border-radius: 4px;">
+                    <div class="label">Creative Experiment 1</div>
+                    <div class="description">Novel technique combination</div>
+                </div>
+                
+                <div class="result-item">
+                    <img src="../images/diffusion-extra-credit-2.png" alt="Extra Credit Creation 2" style="max-width: 100%; height: auto; border-radius: 4px;">
+                    <div class="label">Creative Experiment 2</div>
+                    <div class="description">Innovative application</div>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Key Learnings</h2>
+        
+        <div class="implementation-section">
+            <h3>Diffusion Model Fundamentals</h3>
+            <ul>
+                <li><strong>Noise Scheduling:</strong> Understanding how different noise levels affect generation quality and editability</li>
+                <li><strong>Sampling Strategies:</strong> Trade-offs between speed (fewer steps) and quality (more steps)</li>
+                <li><strong>Classifier-Free Guidance:</strong> How CFG dramatically improves quality by extrapolating beyond conditional estimates</li>
+                <li><strong>Manifold Projection:</strong> Using diffusion as a learned prior to project images onto natural image distributions</li>
+                <li><strong>Text Conditioning:</strong> How language embeddings guide the generation process</li>
+            </ul>
+            
+            <h3>Creative Applications Insights</h3>
+            <ul>
+                <li><strong>Inpainting Mechanics:</strong> Understanding how to constrain diffusion while maintaining naturalness</li>
+                <li><strong>Optical Illusions:</strong> Leveraging the compositional nature of neural representations</li>
+                <li><strong>Frequency Decomposition:</strong> Applying classical signal processing concepts to neural generation</li>
+                <li><strong>Image-to-Image Translation:</strong> Controlling the degree of transformation through noise levels</li>
+                <li><strong>Sketch-to-Photo:</strong> Bridging different image domains through learned priors</li>
+            </ul>
+            
+            <h3>Technical Implementation Skills</h3>
+            <ul>
+                <li><strong>PyTorch Mastery:</strong> Advanced tensor operations, device management, and memory optimization</li>
+                <li><strong>Model Integration:</strong> Working with large pretrained models and handling their requirements</li>
+                <li><strong>Algorithm Implementation:</strong> Translating mathematical formulations into working code</li>
+                <li><strong>Creative Problem Solving:</strong> Adapting techniques for novel applications beyond training objectives</li>
+            </ul>
+        </div>
+        
+        <h2>Impact and Applications</h2>
+        
+        <div class="key-info">
+            <h3>Revolutionary Applications</h3>
+            <p><strong>Creative Industries:</strong> AI-assisted art creation, concept visualization, and rapid prototyping</p>
+            <p><strong>Content Creation:</strong> Automated graphic design, social media content, and marketing materials</p>
+            <p><strong>Medical Imaging:</strong> Image restoration, super-resolution, and synthetic data generation</p>
+            <p><strong>Scientific Visualization:</strong> Data visualization, simulation results, and educational materials</p>
+            <p><strong>Entertainment:</strong> Video game assets, film effects, and interactive media</p>
+            <p><strong>Architecture & Design:</strong> Concept sketches to photorealistic renderings</p>
+        </div>
+        
+        <div class="nav-back" style="margin-top: 50px; text-align: center;">
+            <a href="../index.html">← Back to All Projects</a>
+        </div>
+    </div>
+</body>
+</html>

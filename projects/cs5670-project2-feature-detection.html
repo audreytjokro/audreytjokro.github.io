@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CS5670 Project 2: Feature Detection and Matching</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Source Sans Pro', Helvetica, sans-serif;
+            background: #fff;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            font-weight: 300;
+            margin: 0 0 10px 0;
+            color: #2c3e50;
+        }
+        
+        .header .subtitle {
+            font-size: 1.2em;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+        }
+        
+        .nav-back {
+            text-align: left;
+            margin-bottom: 30px;
+        }
+        
+        .nav-back a {
+            color: #3498db;
+            text-decoration: none;
+            font-size: 0.9em;
+        }
+        
+        .nav-back a:hover {
+            text-decoration: underline;
+        }
+        
+        .project-overview {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        
+        .demo-image {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .demo-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .demo-image .caption {
+            font-style: italic;
+            color: #7f8c8d;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+        
+        h2 {
+            color: #2c3e50;
+            font-weight: 400;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+        
+        h3 {
+            color: #34495e;
+            font-weight: 400;
+            margin-top: 30px;
+        }
+        
+        .key-info {
+            background: #e8f4fd;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .key-info h3 {
+            margin-top: 0;
+            color: #2980b9;
+        }
+        
+        .key-info table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .key-info td {
+            padding: 8px 0;
+            vertical-align: top;
+        }
+        
+        .key-info td:first-child {
+            font-weight: 600;
+            width: 150px;
+        }
+        
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .result-item {
+            text-align: center;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .result-item img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        
+        .result-item .label {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .result-item .description {
+            font-size: 0.9em;
+            color: #7f8c8d;
+        }
+        
+        .implementation-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+        
+        .math-section {
+            background: #fff;
+            padding: 20px;
+            border-radius: 6px;
+            border-left: 4px solid #9b59b6;
+            margin: 20px 0;
+        }
+        
+        .math-placeholder {
+            background: #e9ecef;
+            border: 2px dashed #adb5bd;
+            padding: 30px;
+            text-align: center;
+            border-radius: 8px;
+            color: #6c757d;
+            margin: 15px 0;
+        }
+        
+        .algorithm-steps {
+            background: #fff;
+            padding: 20px;
+            border-radius: 6px;
+            border-left: 4px solid #e74c3c;
+        }
+        
+        .algorithm-steps ol {
+            margin: 0;
+            padding-left: 20px;
+        }
+        
+        .algorithm-steps li {
+            margin: 12px 0;
+            line-height: 1.6;
+        }
+        
+        .my-results {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+        
+        .my-results h3 {
+            color: #856404;
+            margin-top: 0;
+        }
+        
+        .placeholder {
+            background: #e9ecef;
+            border: 2px dashed #adb5bd;
+            padding: 40px;
+            text-align: center;
+            border-radius: 8px;
+            color: #6c757d;
+            margin: 20px 0;
+        }
+        
+        .placeholder.image {
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        
+        .placeholder .icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+        
+        .benchmark-section {
+            background: #f1f8ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+            border-left: 4px solid #0366d6;
+        }
+        
+        .roc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .roc-item {
+            background: #fff;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+        }
+        
+        .method-comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .method-card {
+            background: #fff;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+            border: 2px solid #ecf0f1;
+        }
+        
+        .method-card.best {
+            border-color: #27ae60;
+            background: #d5f4e6;
+        }
+        
+        .method-card h4 {
+            margin: 0 0 10px 0;
+            color: #2c3e50;
+        }
+        
+        .auc-score {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav-back">
+            <a href="../index.html">← Back to Projects</a>
+        </div>
+        
+        <div class="header">
+            <h1>Feature Detection and Matching</h1>
+            <div class="subtitle">CS5670 Project 2 - Introduction to Computer Vision</div>
+            <div class="subtitle">Cornell University, Spring 2025</div>
+        </div>
+        
+        <div class="project-overview">
+            <p><strong>Design and implement a feature detector that allows you to robustly compare images with differences in position, orientation, and illumination.</strong></p>
+            <p>This project implements Harris corner detection, feature description using simple and MOPS descriptors, and feature matching algorithms to identify corresponding points between images for applications like panorama stitching.</p>
+        </div>
+        
+        <div class="demo-image">
+            <img src="../images/feature-detection-result.png" alt="Feature Detection Result" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+            <div class="caption">Harris corner detection identifies distinctive features that can be matched across images</div>
+        </div>
+        
+        <div class="key-info">
+            <h3>Project Details</h3>
+            <table>
+                <tr>
+                    <td>Language:</td>
+                    <td>Python with NumPy, SciPy, OpenCV</td>
+                </tr>
+                <tr>
+                    <td>Key Concepts:</td>
+                    <td>Harris corners, feature descriptors, matching algorithms</td>
+                </tr>
+            </table>
+        </div>
+        
+        <h2>Overview</h2>
+        <p>The goal of feature detection and matching is to identify corresponding points between images that may have differences in position, orientation, and illumination. This forms the foundation for many computer vision applications including panorama stitching, object recognition, and structure from motion.</p>
+        
+        <p>The project consists of three main components: detecting interest points using Harris corner detection, describing features using both simple and MOPS descriptors, and matching features using different distance metrics.</p>
+        
+        <h2>Implementation</h2>
+        
+        <h3>Part 1: Harris Corner Detection</h3>
+        <div class="implementation-section">
+            <p>Harris corner detection identifies points in an image where there are significant changes in intensity in multiple directions. These points are robust to small translations and rotations.</p>
+            
+            <div class="algorithm-steps">
+                <h4>Algorithm Steps:</h4>
+                <ol>
+                    <li><strong>Compute Image Gradients:</strong> Use 3×3 Sobel operators to find x and y derivatives</li>
+                    <li><strong>Build Harris Matrix:</strong> For each pixel, compute the structure tensor in a local window</li>
+                    <li><strong>Calculate Corner Response:</strong> Use the Harris corner strength function</li>
+                    <li><strong>Find Local Maxima:</strong> Select strongest corners that are local maxima in a 7×7 neighborhood</li>
+                </ol>
+            </div>
+            
+            <div class="math-section">
+                <h4>Harris Matrix Mathematics:</h4>
+                <div class="math-placeholder">
+                    <img src="../images/harris-matrix-equation.png" alt="Harris Matrix Equation" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                </div>
+                
+                <div class="math-placeholder">
+                    <img src="../images/harris-corner-response.png" alt="Corner Response Equation" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                </div>
+            </div>
+        </div>
+        
+        <h3>Part 2: Feature Description</h3>
+        <div class="implementation-section">
+            <p>Once interest points are detected, we need to create descriptors that characterize the local appearance around each point for matching purposes.</p>
+            
+            <h4>Simple Descriptor</h4>
+            <p>A 5×5 patch of pixel intensities around each keypoint. Simple but effective for images related by translation.</p>
+            
+            <h4>MOPS Descriptor</h4>
+            <p>A more sophisticated approach that achieves rotation invariance:</p>
+            <div class="algorithm-steps">
+                <ol>
+                    <li><strong>Extract 40×40 patch</strong> around the keypoint</li>
+                    <li><strong>Rotate patch</strong> so keypoint orientation points to the right</li>
+                    <li><strong>Subsample to 8×8</strong> using affine transformation</li>
+                    <li><strong>Normalize</strong> to zero mean and unit variance</li>
+                </ol>
+            </div>
+            
+            <div class="math-section">
+                <h4>MOPS Transformation Process:</h4>
+                <p>The 40×40 → 8×8 transformation involves a sequence of operations:</p>
+                <div class="algorithm-steps">
+                    <ol style="list-style-type: none; padding-left: 0;">
+                        <li><strong>T₁:</strong> Translate to center the 40×40 patch at origin</li>
+                        <li><strong>R:</strong> Rotate by negative keypoint orientation (align to horizontal)</li>
+                        <li><strong>S:</strong> Scale down by factor of 5 (40×40 → 8×8)</li>
+                        <li><strong>T₂:</strong> Translate to center the final 8×8 patch</li>
+                    </ol>
+                </div>
+                
+                <p><strong>Combined transformation:</strong> <em>T = T₂ × S × R × T₁</em>, applied using cv2.warpAffine</p>
+                
+                <p><strong>Why this works:</strong> By rotating the patch so the keypoint orientation points right, features become rotation-invariant. The scaling creates a compact 64-dimensional descriptor (8×8 = 64 values) that can be efficiently compared using distance metrics.</p>
+            </div>
+        </div>
+        
+        <h3>Part 3: Feature Matching</h3>
+        <div class="implementation-section">
+            <p>Implemented two distance metrics for finding corresponding features between images:</p>
+            
+            <h4>Sum of Squared Differences (SSD)</h4>
+            <p>Direct Euclidean distance between feature vectors. Simple but can be sensitive to illumination changes.</p>
+            
+            <h4>Ratio Test</h4>
+            <p>Compares the distance to the best match with the distance to the second-best match. More robust to ambiguous matches.</p>
+            
+            <div class="math-placeholder">
+                <img src="../images/ratio-test-formula.png" alt="Ratio Test Formula" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+            </div>
+        </div>
+        
+        <h2>My Results</h2>
+        
+        <div class="my-results">
+            <h3>Implementation Results</h3>
+            <p>Successfully implemented all three components and evaluated performance on the Yosemite benchmark dataset.</p>
+        </div>
+        
+        <div class="results-grid">
+            <div class="result-item">
+                <img src="../images/feature-original.png" alt="Original Image" style="max-width: 100%; height: auto; border-radius: 4px;">
+                <div class="label">Original Image</div>
+                <div class="description">Input image for feature detection</div>
+            </div>
+            
+            <div class="result-item">
+                <img src="../images/feature-harris.png" alt="Harris Corners Detected" style="max-width: 100%; height: auto; border-radius: 4px;">
+                <div class="label">Harris Corners</div>
+                <div class="description">Detected corner features with orientation</div>
+            </div>
+        </div>
+        
+        <h3>Feature Matching Results</h3>
+        <div class="demo-image">
+            <img src="../images/feature-matching.png" alt="Feature Matching Results" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+            <div class="caption">MOPS + Ratio distance matching between image pairs</div>
+        </div>
+        
+        <h2>Benchmark Results</h2>
+        
+        <div class="benchmark-section">
+            <h3>ROC Curve Analysis on Yosemite Dataset</h3>
+            <p>Evaluated four different combinations of descriptors and distance metrics:</p>
+            
+            <div class="method-comparison">
+                <div class="method-card">
+                    <h4>Simple + SSD</h4>
+                    <div class="auc-score">0.88</div>
+                    <p>AUC Score</p>
+                </div>
+                
+                <div class="method-card">
+                    <h4>Simple + Ratio</h4>
+                    <div class="auc-score">0.90</div>
+                    <p>AUC Score</p>
+                </div>
+                
+                <div class="method-card">
+                    <h4>MOPS + SSD</h4>
+                    <div class="auc-score">0.79</div>
+                    <p>AUC Score</p>
+                </div>
+                
+                <div class="method-card best">
+                    <h4>MOPS + Ratio</h4>
+                    <div class="auc-score">0.91</div>
+                    <p>AUC Score ⭐</p>
+                </div>
+            </div>
+            
+            <div class="roc-grid">
+                <div class="roc-item">
+                    <div class="placeholder image">
+                    <img src="../images/roc-curve-mops.png" alt="ROC Curve for MOPS + Ratio" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                    </div>
+                </div>
+            </div>
+            
+            <p><strong>Best Method:</strong> MOPS descriptor with Ratio test distance provides the best performance due to rotation invariance and robust matching criteria.</p>
+        </div>
+        
+        <h2>Key Learnings</h2>
+        
+        <div class="implementation-section">
+            <h3>Technical Insights</h3>
+            <ul>
+                <li><strong>Harris Corner Detection:</strong> Understanding how the structure tensor captures local image variations and corner strength</li>
+                <li><strong>Rotation Invariance:</strong> MOPS descriptor's use of keypoint orientation to achieve invariance to image rotation</li>
+                <li><strong>Robust Matching:</strong> Ratio test's effectiveness in handling ambiguous matches and false positives</li>
+                <li><strong>Affine Transformations:</strong> Practical experience with cv2.warpAffine for geometric image transformations</li>
+                <li><strong>Performance Evaluation:</strong> ROC analysis and AUC metrics for quantitative comparison of algorithms</li>
+            </ul>
+            
+            <h3>Computer Vision Concepts</h3>
+            <ul>
+                <li><strong>Feature Detection:</strong> Identifying repeatable, distinctive points robust to image transformations</li>
+                <li><strong>Descriptor Design:</strong> Balancing discriminative power with computational efficiency</li>
+                <li><strong>Invariance Trade-offs:</strong> Understanding which image transformations each method can handle</li>
+                <li><strong>Evaluation Methodology:</strong> Using controlled datasets with ground truth for systematic algorithm comparison</li>
+            </ul>
+        </div>
+        
+        <h2>Applications</h2>
+        
+        <div class="key-info">
+            <h3>Real-World Uses</h3>
+            <p><strong>Image Stitching:</strong> Feature correspondences enable panorama creation by finding overlapping regions</p>
+            <p><strong>Object Recognition:</strong> Matching features across different views of the same object</p>
+            <p><strong>Structure from Motion:</strong> Reconstructing 3D scene geometry from multiple 2D images</p>
+            <p><strong>Visual SLAM:</strong> Simultaneous localization and mapping for robotics and AR applications</p>
+        </div>
+        
+        <div class="nav-back" style="margin-top: 50px; text-align: center;">
+            <a href="../index.html">← Back to All Projects</a>
+        </div>
+    </div>
+</body>
+</html>

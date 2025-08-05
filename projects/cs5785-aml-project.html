@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Automated Pneumonia Detection using Deep Learning - Audrey Tjokro</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <style>
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .nav-link {
+            color: #666;
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+        .nav-link:hover {
+            color: #333;
+        }
+        .project-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        .project-title {
+            font-size: 2.2em;
+            font-weight: 300;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .project-subtitle {
+            font-size: 1.2em;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        .project-meta {
+            font-size: 0.9em;
+            color: #888;
+        }
+        .overview-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid #007bff;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 4px;
+        }
+        .main-image {
+            text-align: center;
+            margin: 40px 0;
+        }
+        .main-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .caption {
+            font-style: italic;
+            color: #666;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+        .info-table {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            margin: 30px 0;
+            overflow: hidden;
+        }
+        .info-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .info-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .info-table td:first-child {
+            font-weight: 600;
+            background-color: #e9ecef;
+            width: 150px;
+        }
+        .math-section {
+            background-color: #fff;
+            border-left: 4px solid #6f42c1;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .algorithm-section {
+            background-color: #fff;
+            border-left: 4px solid #dc3545;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .results-section {
+            background-color: #fff;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .result-item {
+            text-align: center;
+        }
+        .result-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .method-comparison {
+            margin: 30px 0;
+        }
+        .method-comparison table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .method-comparison th,
+        .method-comparison td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .method-comparison th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+        }
+        .best-result {
+            background-color: #d4edda;
+            font-weight: 600;
+        }
+        h2 {
+            color: #333;
+            font-weight: 400;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        h3 {
+            color: #555;
+            font-weight: 500;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../index.html" class="nav-link">← Back to Projects</a>
+        
+        <div class="project-header">
+            <h1 class="project-title">Automated Pneumonia Detection using Deep Learning</h1>
+            <p class="project-subtitle">Comparative Analysis of Faster R-CNN Architectures for Medical Image Classification</p>
+            <p class="project-meta">CS 5785 Applied Machine Learning • Fall 2024 • Team Project</p>
+        </div>
+
+        <div class="overview-box">
+            <p><strong>Project Overview:</strong> This project explores automated pneumonia detection in chest X-rays using three distinct Faster R-CNN implementations. We evaluated different backbone architectures, optimizers, and transfer learning approaches on the RSNA Pneumonia Detection Challenge dataset, achieving up to 77.34% training accuracy and 76.81% validation accuracy with ResNet-50 pretrained on ImageNet.</p>
+        </div>
+
+        <div class="main-image">
+            <img src="../images/pneumonia-dataset-examples.png" alt="Example chest X-ray images from the RSNA dataset showing normal and pneumonia cases">
+            <p class="caption">Representative chest X-ray images from the RSNA dataset, showing both normal cases and pneumonia-positive cases with annotated bounding boxes indicating areas of lung opacity.</p>
+        </div>
+
+        <div class="info-table">
+            <table>
+                <tr>
+                    <td>Completion Date</td>
+                    <td>December 2024</td>
+                </tr>
+                <tr>
+                    <td>Course Context</td>
+                    <td>CS 5785: Applied Machine Learning Final Project</td>
+                </tr>
+                <tr>
+                    <td>Dataset</td>
+                    <td>RSNA Pneumonia Detection Challenge (26,000+ training images)</td>
+                </tr>
+                <tr>
+                    <td>Key Technologies</td>
+                    <td>PyTorch, Faster R-CNN, ResNet-50, Transfer Learning</td>
+                </tr>
+                <tr>
+                    <td>Core Concepts</td>
+                    <td>Object Detection, Medical Image Analysis, Deep Learning, Binary Classification</td>
+                </tr>
+            </table>
+        </div>
+
+        <h2>Technical Approach</h2>
+        <p>We implemented and compared three distinct approaches to automated pneumonia detection, each leveraging different aspects of the Faster R-CNN architecture for object detection and localization of lung opacities in chest radiographs.</p>
+
+        <div class="algorithm-section">
+            <h3>Method 1: Torch Faster R-CNN with ResNet-50 and Adam Optimizer</h3>
+            <p><strong>Architecture:</strong> Faster R-CNN with ResNet-50 Feature Pyramid Network (FPN) backbone</p>
+            <p><strong>Transfer Learning:</strong> Pretrained weights from COCO dataset</p>
+            <p><strong>Training Configuration:</strong></p>
+            <ul>
+                <li>Optimizer: Adam (learning rate: 0.001)</li>
+                <li>Epochs: 2</li>
+                <li>Batch size: 4</li>
+                <li>Image resolution: 128×128 pixels</li>
+                <li>Data split: 80% training, 20% validation</li>
+            </ul>
+        </div>
+
+        <div class="algorithm-section">
+            <h3>Method 2: Faster R-CNN with ResNet-50 (ImageNet Pretrained)</h3>
+            <p><strong>Architecture:</strong> ResNet-50 with custom classification head</p>
+            <p><strong>Transfer Learning:</strong> Pretrained weights from ImageNet</p>
+            <p><strong>Network Design:</strong></p>
+            <ul>
+                <li>Feature extractor: ResNet-50 (frozen pretrained layers)</li>
+                <li>Global Average Pooling layer</li>
+                <li>Dense layer: 1024 units with ReLU activation</li>
+                <li>Output layer: Sigmoid activation for binary classification</li>
+            </ul>
+            <p><strong>Training Configuration:</strong></p>
+            <ul>
+                <li>Loss function: Binary cross-entropy</li>
+                <li>Optimizer: Adam</li>
+                <li>Epochs: 10 (early stopping at 1 epoch for optimal performance)</li>
+                <li>Batch size: 32</li>
+            </ul>
+        </div>
+
+        <div class="algorithm-section">
+            <h3>Method 3: PyTorch Faster R-CNN with ResNet-50-FPN and SGD</h3>
+            <p><strong>Architecture:</strong> Faster R-CNN with ResNet-50-FPN backbone</p>
+            <p><strong>Transfer Learning:</strong> PyTorch default pretrained weights</p>
+            <p><strong>Training Configuration:</strong></p>
+            <ul>
+                <li>Optimizer: Stochastic Gradient Descent (SGD)</li>
+                <li>Learning rate: 0.01</li>
+                <li>Weight decay: 0.0005</li>
+                <li>Epochs: 2</li>
+                <li>Data split: 80% training, 20% validation</li>
+            </ul>
+        </div>
+
+        <div class="math-section">
+            <h3>Faster R-CNN Architecture</h3>
+            <p>The Faster R-CNN architecture combines two key components for object detection:</p>
+            <p><strong>Region Proposal Network (RPN):</strong> Generates object proposals by sliding a small network over the CNN feature map. For each location, it predicts object/no-object scores and bounding box coordinates.</p>
+            <p><strong>Fast R-CNN Detection Network:</strong> Takes the proposed regions and performs classification and bounding box regression. The network outputs class probabilities and refined bounding box coordinates.</p>
+            <p>The loss function combines classification loss and localization loss:</p>
+            <p><em>L = L_cls + λL_reg</em></p>
+            <p>where L_cls is the classification loss (cross-entropy) and L_reg is the bounding box regression loss (smooth L1 loss).</p>
+        </div>
+
+        <h2>Dataset and Preprocessing</h2>
+        <p>The RSNA Pneumonia Detection Challenge dataset contains over 26,000 chest X-ray images from the National Institutes of Health Clinical Center. Each image includes:</p>
+        <ul>
+            <li>Patient ID and binary pneumonia classification target</li>
+            <li>Bounding box annotations (x-min, y-min, width, height) for pneumonia regions</li>
+            <li>Multiple bounding boxes per image when applicable</li>
+        </ul>
+
+        <div class="results-section">
+            <h3>Data Preprocessing Pipeline</h3>
+            <ul>
+                <li>Custom PyTorch dataset class for DICOM image handling</li>
+                <li>Image resizing and tensor conversion</li>
+                <li>Normalization and data augmentation</li>
+                <li>Invalid bounding box filtering for data quality</li>
+                <li>Train/validation split with minibatch loading</li>
+            </ul>
+        </div>
+
+        <h2>Results and Performance Comparison</h2>
+
+        <div class="method-comparison">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Method</th>
+                        <th>Training Accuracy</th>
+                        <th>Validation Accuracy</th>
+                        <th>Training Loss</th>
+                        <th>Validation Loss</th>
+                        <th>Epochs</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Method 1: Torch + Adam</td>
+                        <td>82.45%</td>
+                        <td>72.61%</td>
+                        <td>0.52</td>
+                        <td>0.55</td>
+                        <td>2</td>
+                    </tr>
+                    <tr class="best-result">
+                        <td>Method 2: ImageNet + ResNet-50</td>
+                        <td>77.34%</td>
+                        <td>76.81%</td>
+                        <td>0.5450</td>
+                        <td>0.5151</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>Method 3: PyTorch + SGD</td>
+                        <td>83.33%</td>
+                        <td>73.95%</td>
+                        <td>0.30</td>
+                        <td>N/A</td>
+                        <td>2</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="results-grid">
+            <!-- <div class="result-item">
+                <img src="../images/pneumonia-method2-training.png" alt="Training curves for Method 2 showing loss and accuracy over epochs">
+                <p class="caption">Method 2 training performance: Best validation accuracy of 76.81% achieved with ImageNet pretrained weights</p>
+            </div> -->
+            <div class="result-item">
+                <img src="../images/rsna-loss-graph.png" alt="Loss convergence graph for Method 3 showing decreasing loss over batch iterations">
+                <p class="caption">Method 3 loss convergence: Training loss decreased to approximately 0.3 over batch iterations</p>
+            </div>
+        </div>
+
+        <div class="results-section">
+            <h3>Key Findings</h3>
+            <p><strong>Best Overall Performance:</strong> Method 2 (Faster R-CNN with ImageNet pretrained ResNet-50) achieved the highest validation accuracy of 76.81%, demonstrating superior generalization despite training for only 1 epoch.</p>
+            
+            <p><strong>Transfer Learning Impact:</strong> ImageNet pretraining provided better initialization than COCO pretraining for this medical imaging task, likely due to the larger and more diverse ImageNet dataset.</p>
+            
+            <p><strong>Training Efficiency:</strong> Method 2 reached optimal performance in fewer epochs, suggesting that ImageNet features transfer effectively to medical image analysis tasks.</p>
+            
+            <p><strong>Computational Constraints:</strong> Limited computational resources restricted extensive hyperparameter exploration and prevented evaluation of additional architectures like YOLO.</p>
+        </div>
+
+        <h2>Technical Achievements</h2>
+        <ul>
+            <li><strong>Multi-architecture Evaluation:</strong> Successfully implemented and compared three distinct Faster R-CNN variants with different backbones and optimization strategies</li>
+            <li><strong>Medical Image Pipeline:</strong> Developed robust preprocessing pipeline for DICOM chest X-ray images with bounding box handling</li>
+            <li><strong>Transfer Learning Analysis:</strong> Demonstrated effectiveness of ImageNet pretraining over COCO pretraining for medical imaging applications</li>
+            <li><strong>Performance Optimization:</strong> Achieved competitive accuracy (76.81% validation) on challenging medical dataset with limited computational resources</li>
+            <li><strong>Reproducible Framework:</strong> Created modular, extensible codebase for pneumonia detection that can be adapted for other medical imaging tasks</li>
+        </ul>
+
+        <div class="results-section">
+            <h3>Clinical Relevance</h3>
+            <p>This work demonstrates the feasibility of automated pneumonia detection systems that could assist radiologists in clinical settings. The achieved accuracy levels suggest potential for:</p>
+            <ul>
+                <li>Prioritizing urgent cases requiring immediate radiologist review</li>
+                <li>Reducing diagnostic burden in resource-limited healthcare settings</li>
+                <li>Providing consistent preliminary screening for large volumes of chest X-rays</li>
+                <li>Supporting radiologist decision-making with automated opacity localization</li>
+            </ul>
+        </div>
+
+        <a href="../index.html" class="nav-link" style="margin-top: 40px; display: block;">← Back to Projects</a>
+    </div>
+</body>
+</html>

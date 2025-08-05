@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Stereo Vision and 3D Reconstruction</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Source Sans Pro', Helvetica, sans-serif;
+            background: #fff;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            font-weight: 300;
+            margin: 0 0 10px 0;
+            color: #2c3e50;
+        }
+        
+        .header .subtitle {
+            font-size: 1.2em;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+        }
+        
+        .nav-back {
+            text-align: left;
+            margin-bottom: 30px;
+        }
+        
+        .nav-back a {
+            color: #3498db;
+            text-decoration: none;
+            font-size: 0.9em;
+        }
+        
+        .nav-back a:hover {
+            text-decoration: underline;
+        }
+        
+        .project-overview {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        
+        .demo-image {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .demo-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .demo-image .caption {
+            font-style: italic;
+            color: #7f8c8d;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+        
+        h2 {
+            color: #2c3e50;
+            font-weight: 400;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+        
+        h3 {
+            color: #34495e;
+            font-weight: 400;
+            margin-top: 30px;
+        }
+        
+        .key-info {
+            background: #e8f4fd;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .key-info h3 {
+            margin-top: 0;
+            color: #2980b9;
+        }
+        
+        .key-info table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .key-info td {
+            padding: 8px 0;
+            vertical-align: top;
+        }
+        
+        .key-info td:first-child {
+            font-weight: 600;
+            width: 150px;
+        }
+        
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .result-item {
+            text-align: center;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .result-item img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        
+        .result-item .label {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .result-item .description {
+            font-size: 0.9em;
+            color: #7f8c8d;
+        }
+        
+        .implementation-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+        
+        .math-section {
+            background: #fff;
+            padding: 20px;
+            border-radius: 6px;
+            border-left: 4px solid #9b59b6;
+            margin: 20px 0;
+        }
+        
+        .algorithm-steps {
+            background: #fff;
+            padding: 20px;
+            border-radius: 6px;
+            border-left: 4px solid #e74c3c;
+        }
+        
+        .algorithm-steps ol {
+            margin: 0;
+            padding-left: 20px;
+        }
+        
+        .algorithm-steps li {
+            margin: 12px 0;
+            line-height: 1.6;
+        }
+        
+        .my-results {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+        
+        .my-results h3 {
+            color: #856404;
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav-back">
+            <a href="../index.html">← Back to Projects</a>
+        </div>
+        
+        <div class="header">
+            <h1>Stereo Vision and 3D Reconstruction</h1>
+            <div class="subtitle">Classical Computer Vision Methods</div>
+            <div class="subtitle">Self-Directed Study, August 2025</div>
+        </div>
+        
+        <div class="project-overview">
+            <p><strong>Implement photometric stereo and plane sweep stereo algorithms for 3D scene reconstruction.</strong></p>
+            <p>This project explores classical computer vision techniques for recovering 3D surface properties from 2D images. Photometric stereo uses varying illumination to estimate surface normals and albedo, while plane sweep stereo uses multiple viewpoints to compute depth maps through normalized cross-correlation matching.</p>
+        </div>
+        
+        <div class="demo-image">
+            <img src="../images/stereo-pipeline-overview.png" alt="Stereo Vision Pipeline Overview" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+            <div class="caption">Complete 3D reconstruction pipeline: from input images to surface normals, depth maps, and final 3D meshes</div>
+        </div>
+        
+        <div class="key-info">
+            <h3>Project Details</h3>
+            <table>
+                <tr>
+                    <td>Completed:</td>
+                    <td>August 2025</td>
+                </tr>
+                <tr>
+                    <td>Implementation:</td>
+                    <td>Python with NumPy, OpenCV, Open3D</td>
+                </tr>
+                <tr>
+                    <td>Datasets:</td>
+                    <td>Harvard Photometric Stereo, Middlebury Stereo</td>
+                </tr>
+                <tr>
+                    <td>Key Concepts:</td>
+                    <td>Multi-view geometry, surface reconstruction, mesh generation</td>
+                </tr>
+            </table>
+        </div>
+        
+        <h2>Overview</h2>
+        <p>Stereo vision encompasses multiple approaches to 3D scene reconstruction, each exploiting different image formation principles. This project implements two complementary techniques: photometric stereo for detailed surface analysis and geometric stereo for spatial structure recovery.</p>
+        
+        <p>The complete pipeline processes input images through photometric and geometric analysis to produce comprehensive 3D reconstructions including surface normals, albedo maps, depth estimates, and final mesh models.</p>
+        
+        <h2>Photometric Stereo</h2>
+        <div class="implementation-section">
+            <p>Photometric stereo recovers surface properties by analyzing how appearance changes under different lighting conditions. The method assumes Lambertian reflectance and uses least squares optimization to solve for surface normals and albedo.</p>
+            
+            <h3>Lambertian Reflectance Model</h3>
+            <p>For Lambertian surfaces, observed intensity equals surface albedo times the dot product of surface normal and light direction:</p>
+            
+            <div class="math-section">
+                <img src="../images/stereo-lambertian-equation.png" alt="Lambertian Reflectance Mathematics" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+            </div>
+            
+            <h3>Algorithm Implementation</h3>
+            <p>The implementation solves a linear system for each pixel using multiple illumination observations:</p>
+            
+            <div class="algorithm-steps">
+                <ol>
+                    <li><strong>Data Setup:</strong> Load N images under known illumination directions</li>
+                    <li><strong>Linear System:</strong> For each pixel, construct system I = ρ(n·l)</li>
+                    <li><strong>Least Squares:</strong> Solve overdetermined system for albedo-normal product</li>
+                    <li><strong>Decomposition:</strong> Extract albedo magnitude and unit normal direction</li>
+                    <li><strong>Coordinate Frame:</strong> Ensure normals follow RGB color encoding (R=+X, G=+Y, B=+Z)</li>
+                </ol>
+            </div>
+        </div>
+        
+        <h3>Photometric Stereo Results</h3>
+        <div class="results-grid">
+            <div class="result-item">
+                <img src="../images/stereo-tentacle-input-lights.png" alt="Input Images Under Different Lighting" style="max-width: 100%; height: auto; border-radius: 4px;">
+                <div class="label">Input: Multiple Illuminations</div>
+                <div class="description">Same viewpoint, 9 different lighting directions</div>
+            </div>
+            
+            <div class="result-item">
+                <img src="../images/stereo-tentacle-normals.png" alt="Recovered Surface Normals" style="max-width: 100%; height: auto; border-radius: 4px;">
+                <div class="label">Recovered Surface Normals</div>
+                <div class="description">RGB encoding: R=+X, G=+Y, B=+Z directions</div>
+            </div>
+        </div>
+        
+        <div class="results-grid">
+            <div class="result-item">
+                <img src="../images/stereo-tentacle-albedo.png" alt="Surface Albedo Map" style="max-width: 100%; height: auto; border-radius: 4px;">
+                <div class="label">Surface Albedo</div>
+                <div class="description">Intrinsic surface reflectance properties</div>
+            </div>
+            
+            <div class="result-item">
+                <img src="../images/stereo-cat-normals.png" alt="Cat Normal Map" style="max-width: 100%; height: auto; border-radius: 4px;">
+                <div class="label">Cat Dataset Results</div>
+                <div class="description">Real photometric stereo reconstruction</div>
+            </div>
+        </div>
+        
+        <h2>Plane Sweep Stereo</h2>
+        <div class="implementation-section">
+            <p>Plane sweep stereo estimates scene depth by systematically testing different depth hypotheses and finding the best stereo correspondences using normalized cross-correlation matching.</p>
+            
+            <h3>Camera Projection and Epipolar Geometry</h3>
+            <p>3D points are projected to 2D image coordinates using calibrated camera parameters:</p>
+            
+            <div class="math-section">
+                <img src="../images/stereo-projection-equation.png" alt="Camera Projection Mathematics" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+            </div>
+            
+            <h3>Normalized Cross-Correlation Matching</h3>
+            <p>Correspondence quality is measured using normalized cross-correlation between image patches:</p>
+            
+            <div class="math-section">
+                <img src="../images/stereo-ncc-equation.png" alt="NCC Matching Mathematics" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+            </div>
+            
+            <h3>Plane Sweep Algorithm</h3>
+            <p>The algorithm systematically tests depth hypotheses by projecting one image to the other's viewpoint:</p>
+            
+            <div class="algorithm-steps">
+                <ol>
+                    <li><strong>Calibration:</strong> Load camera intrinsics and extrinsics for stereo pair</li>
+                    <li><strong>Depth Sampling:</strong> Define range of depth hypotheses to test</li>
+                    <li><strong>Image Projection:</strong> For each depth, project left image to right viewpoint</li>
+                    <li><strong>NCC Computation:</strong> Calculate normalized cross-correlation between projected and actual right image</li>
+                    <li><strong>Cost Volume:</strong> Build 3D array of matching costs (H×W×D)</li>
+                    <li><strong>Depth Selection:</strong> Choose depth with highest correlation at each pixel</li>
+                </ol>
+            </div>
+        </div>
+        
+        <h3>Plane Sweep Stereo Results</h3>
+        <div class="results-grid">
+            <div class="result-item">
+                <img src="../images/stereo-input-pair.png" alt="Stereo Input Image Pair" style="max-width: 100%; height: auto; border-radius: 4px;">
+                <div class="label">Stereo Image Pair</div>
+                <div class="description">Calibrated cameras with known baseline</div>
+            </div>
+            
+            <div class="result-item">
+                <img src="../images/stereo-projected-animation.gif" alt="Plane Sweep Animation" style="max-width: 100%; height: auto; border-radius: 4px;">
+                <div class="label">Plane Sweep Process</div>
+                <div class="description">Animation showing depth hypothesis testing</div>
+            </div>
+        </div>
+        
+        <div class="results-grid">
+            <div class="result-item">
+                <img src="../images/stereo-ncc-cost-volume.gif" alt="NCC Cost Volume" style="max-width: 100%; height: auto; border-radius: 4px;">
+                <div class="label">NCC Cost Volume</div>
+                <div class="description">Correlation scores across depth layers</div>
+            </div>
+            
+            <div class="result-item">
+                <img src="../images/stereo-depth-map.png" alt="Final Depth Map" style="max-width: 100%; height: auto; border-radius: 4px;">
+                <div class="label">Computed Depth Map</div>
+                <div class="description">White=near, Black=far depth estimates</div>
+            </div>
+        </div>
+        
+        <h2>3D Mesh Reconstruction</h2>
+        <div class="implementation-section">
+            <p>The final stage converts 2D analysis results into complete 3D mesh models through surface integration and point cloud reconstruction techniques.</p>
+            
+            <h3>Surface Integration</h3>
+            <p>Surface normals are integrated to produce depth maps using the Frankot-Chellappa algorithm, which enforces integrability constraints in the frequency domain.</p>
+            
+            <h3>Mesh Generation Pipeline</h3>
+            <p>Point clouds are converted to smooth meshes using Poisson surface reconstruction:</p>
+            
+            <div class="algorithm-steps">
+                <ol>
+                    <li><strong>Point Cloud Generation:</strong> Unproject depth values to 3D coordinates using camera intrinsics</li>
+                    <li><strong>Normal Estimation:</strong> Compute point normals from local surface orientation</li>
+                    <li><strong>Poisson Reconstruction:</strong> Generate smooth mesh surface from oriented point cloud</li>
+                    <li><strong>Texture Mapping:</strong> Project original images for photorealistic rendering</li>
+                </ol>
+            </div>
+        </div>
+        
+        <h3>3D Reconstruction Results</h3>
+        <div class="results-grid">
+            <div class="result-item">
+                <img src="../images/stereo-mesh-normals.png" alt="Mesh from Normals" style="max-width: 100%; height: auto; border-radius: 4px;">
+                <div class="label">Mesh from Photometric Normals</div>
+                <div class="description">High surface detail from lighting analysis</div>
+            </div>
+            
+            <div class="result-item">
+                <img src="../images/stereo-mesh-depth.png" alt="Mesh from Depth" style="max-width: 100%; height: auto; border-radius: 4px;">
+                <div class="label">Mesh from Stereo Depth</div>
+                <div class="description">Accurate global geometry from multi-view</div>
+            </div>
+        </div>
+        
+        <div class="demo-image">
+            <img src="../images/stereo-combined-mesh.png" alt="Combined 3D Reconstruction" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+            <div class="caption">Final 3D reconstruction combining photometric detail with geometric accuracy</div>
+        </div>
+        
+        <h2>Implementation Results</h2>
+        
+        <div class="my-results">
+            <h3>Technical Achievements</h3>
+            <p>Successfully implemented all three components of the stereo vision pipeline, achieving accurate surface normal estimation, depth map computation, and high-quality 3D mesh reconstruction on multiple datasets.</p>
+        </div>
+        
+        <div class="implementation-section">
+            <h3>Performance Metrics</h3>
+            <ul>
+                <li><strong>Photometric Stereo:</strong> Sub-second processing for surface normal and albedo recovery on 128×128 images</li>
+                <li><strong>Plane Sweep Stereo:</strong> Efficient cost volume computation with vectorized NCC matching under 10 seconds</li>
+                <li><strong>Mesh Reconstruction:</strong> Robust surface integration and Poisson reconstruction for clean 3D models</li>
+                <li><strong>Multi-Dataset Validation:</strong> Tested on Harvard photometric stereo and Middlebury stereo benchmark datasets</li>
+            </ul>
+            
+            <h3>Implementation Details</h3>
+            <ul>
+                <li><strong>Vectorization:</strong> NumPy operations for efficient computation without nested loops</li>
+                <li><strong>Numerical Stability:</strong> Proper handling of singular cases and division by zero</li>
+                <li><strong>Memory Management:</strong> Efficient processing of large cost volumes and image stacks</li>
+                <li><strong>Coordinate Systems:</strong> Consistent normal and depth representations for mesh compatibility</li>
+            </ul>
+        </div>
+        
+        <div class="nav-back" style="margin-top: 50px; text-align: center;">
+            <a href="../index.html">← Back to All Projects</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CS5670 Project 3: Autostitch - Panorama Creation</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Source Sans Pro', Helvetica, sans-serif;
+            background: #fff;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            font-weight: 300;
+            margin: 0 0 10px 0;
+            color: #2c3e50;
+        }
+        
+        .header .subtitle {
+            font-size: 1.2em;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+        }
+        
+        .nav-back {
+            text-align: left;
+            margin-bottom: 30px;
+        }
+        
+        .nav-back a {
+            color: #3498db;
+            text-decoration: none;
+            font-size: 0.9em;
+        }
+        
+        .nav-back a:hover {
+            text-decoration: underline;
+        }
+        
+        .project-overview {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        
+        .demo-image {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .demo-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .demo-image .caption {
+            font-style: italic;
+            color: #7f8c8d;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+        
+        h2 {
+            color: #2c3e50;
+            font-weight: 400;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+        
+        h3 {
+            color: #34495e;
+            font-weight: 400;
+            margin-top: 30px;
+        }
+        
+        .key-info {
+            background: #e8f4fd;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .key-info h3 {
+            margin-top: 0;
+            color: #2980b9;
+        }
+        
+        .key-info table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .key-info td {
+            padding: 8px 0;
+            vertical-align: top;
+        }
+        
+        .key-info td:first-child {
+            font-weight: 600;
+            width: 150px;
+        }
+        
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .result-item {
+            text-align: center;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .result-item img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        
+        .result-item .label {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .result-item .description {
+            font-size: 0.9em;
+            color: #7f8c8d;
+        }
+        
+        .implementation-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+        
+        .math-section {
+            background: #fff;
+            padding: 20px;
+            border-radius: 6px;
+            border-left: 4px solid #9b59b6;
+            margin: 20px 0;
+        }
+        
+        .algorithm-steps {
+            background: #fff;
+            padding: 20px;
+            border-radius: 6px;
+            border-left: 4px solid #e74c3c;
+        }
+        
+        .algorithm-steps ol {
+            margin: 0;
+            padding-left: 20px;
+        }
+        
+        .algorithm-steps li {
+            margin: 12px 0;
+            line-height: 1.6;
+        }
+        
+        .pipeline-section {
+            background: #fff;
+            padding: 20px;
+            border-radius: 6px;
+            border-left: 4px solid #f39c12;
+            margin: 20px 0;
+        }
+        
+        .pipeline-section ol {
+            margin: 0;
+            padding-left: 20px;
+        }
+        
+        .pipeline-section li {
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+        
+        .my-results {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+        
+        .my-results h3 {
+            color: #856404;
+            margin-top: 0;
+        }
+        
+        .challenge-section {
+            background: #ffeef0;
+            border: 1px solid #f5c6cb;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+            border-left: 4px solid #dc3545;
+        }
+        
+        .challenge-section h3 {
+            color: #721c24;
+            margin-top: 0;
+        }
+        
+        .motion-models {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .motion-model-card {
+            background: #fff;
+            padding: 20px;
+            border-radius: 6px;
+            border: 2px solid #ecf0f1;
+        }
+        
+        .motion-model-card h4 {
+            margin: 0 0 15px 0;
+            color: #2c3e50;
+            border-bottom: 1px solid #ecf0f1;
+            padding-bottom: 10px;
+        }
+        
+        .panorama-showcase {
+            background: #f1f8ff;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 30px 0;
+            border-left: 4px solid #0366d6;
+        }
+        
+        .panorama-showcase h3 {
+            margin-top: 0;
+            color: #0366d6;
+        }
+        
+        .camera-params {
+            background: #fff;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #d1ecf1;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        
+        .camera-params h4 {
+            margin: 0 0 10px 0;
+            font-family: 'Source Sans Pro', sans-serif;
+            color: #0c5460;
+        }
+        
+        .blending-techniques {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .blend-card {
+            background: #fff;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+            border: 2px solid #ecf0f1;
+        }
+        
+        .blend-card h4 {
+            margin: 0 0 10px 0;
+            color: #2c3e50;
+        }
+        
+        .extra-credit-section {
+            background: #f0f9ff;
+            border: 1px solid #bfdbfe;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+            border-left: 4px solid #3b82f6;
+        }
+        
+        .extra-credit-section h3 {
+            color: #1e40af;
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav-back">
+            <a href="../index.html">← Back to Projects</a>
+        </div>
+        
+        <div class="header">
+            <h1>Autostitch - Panorama Creation</h1>
+            <div class="subtitle">CS5670 Project 3 - Introduction to Computer Vision</div>
+            <div class="subtitle">Cornell University, Spring 2025</div>
+        </div>
+        
+        <div class="project-overview">
+            <p><strong>Stitch images together to create seamless panoramas.</strong></p>
+            <p>This project implements a complete panorama creation pipeline including spherical warping, feature matching with RANSAC alignment, and advanced blending techniques to combine multiple overlapping photographs into a single seamless panoramic image.</p>
+        </div>
+        
+        <div class="demo-image">
+            <img src="../images/autostitch-final-panorama.png" alt="Final Panorama Result" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+            <div class="caption">Complete panorama created from multiple overlapping images using RANSAC alignment and feathering blend</div>
+        </div>
+        
+        <div class="key-info">
+            <h3>Project Details</h3>
+            <table>
+                <tr>
+                    <td>Language:</td>
+                    <td>Python with NumPy, SciPy, OpenCV</td>
+                </tr>
+                <tr>
+                    <td>Key Concepts:</td>
+                    <td>RANSAC, homographies, spherical warping, image blending</td>
+                </tr>
+            </table>
+        </div>
+        
+        <h2>Overview</h2>
+        <p>Panorama creation is a fundamental computer vision task that combines multiple overlapping photographs into a single wide-angle view. This project implements the complete autostitch pipeline, from raw photographs to seamless panoramic images.</p>
+        
+        <p>The system supports two different alignment approaches: translation-based alignment using spherically warped images (ideal for 360° panoramas), and homography-based alignment for direct image registration (suitable for planar scenes and handheld photography).</p>
+        
+        <h2>Pipeline Architecture</h2>
+        
+        <div class="implementation-section">
+            <h3>Complete Autostitch Pipeline</h3>
+            <div class="pipeline-section">
+                <ol>
+                    <li><strong>Image Acquisition:</strong> Capture overlapping photographs (50% overlap recommended)</li>
+                    <li><strong>[Optional] Spherical Warping:</strong> Transform to spherical coordinates for 360° panoramas</li>
+                    <li><strong>Feature Extraction:</strong> Use ORB detector to find discriminative keypoints</li>
+                    <li><strong>Feature Matching:</strong> Find correspondences between overlapping images</li>
+                    <li><strong>RANSAC Alignment:</strong> Robust estimation of inter-image transformations</li>
+                    <li><strong>Global Alignment:</strong> Chain transformations and correct for drift</li>
+                    <li><strong>Image Blending:</strong> Seamless composition with feathering weights</li>
+                    <li><strong>Final Processing:</strong> Crop and optimize the resulting panorama</li>
+                </ol>
+            </div>
+        </div>
+        
+        <h2>Implementation Details</h2>
+        
+        <h3>Part 1: Spherical Warping</h3>
+        <div class="implementation-section">
+            <p>For 360° panoramas and wide-angle sequences, spherical warping corrects for the curved nature of the camera's field of view.</p>
+            
+            <div class="math-section">
+                <h4>Spherical Coordinate Transformation:</h4>
+                <img src="../images/spherical-warping-equations.png" alt="Spherical Warping Mathematics" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                
+                <h4>Radial Distortion Correction:</h4>
+                <img src="../images/radial-distortion-equation.png" alt="Radial Distortion Equation" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+            </div>
+            
+            <div class="camera-params">
+                <h4>Camera Parameters Used:</h4>
+                <strong>Campus Dataset:</strong><br>
+                f = 595, k1 = -0.15, k2 = 0.00<br><br>
+                <strong>Yosemite Dataset:</strong><br>
+                f = 678, k1 = -0.21, k2 = 0.26
+            </div>
+            
+            <p><strong>Key Insight:</strong> Spherical warping linearizes the motion between camera positions, making translation-based alignment much more effective for wide-angle sequences.</p>
+        </div>
+        
+        <h3>Part 2: Motion Models and Alignment</h3>
+        <div class="implementation-section">
+            <p>The system supports two motion models for different scenarios:</p>
+            
+            <div class="motion-models">
+                <div class="motion-model-card">
+                    <h4>Translation Model</h4>
+                    <p><strong>Use Case:</strong> 360° panoramas with spherical warping</p>
+                    <p><strong>DOF:</strong> 2 parameters (tx, ty)</p>
+                    <p><strong>RANSAC:</strong> 1 correspondence needed</p>
+                    <p><strong>Assumption:</strong> Pure camera rotation</p>
+                </div>
+                
+                <div class="motion-model-card">
+                    <h4>Homography Model</h4>
+                    <p><strong>Use Case:</strong> Planar scenes, handheld photography</p>
+                    <p><strong>DOF:</strong> 8 parameters (3×3 matrix)</p>
+                    <p><strong>RANSAC:</strong> 4 correspondences needed</p>
+                    <p><strong>Assumption:</strong> Planar world or distant scenes</p>
+                </div>
+            </div>
+        </div>
+        
+        <h3>Part 3: RANSAC-Based Alignment</h3>
+        <div class="implementation-section">
+            <p>Robust estimation of inter-image transformations using Random Sample Consensus (RANSAC).</p>
+            
+            <div class="algorithm-steps">
+                <h4>RANSAC Algorithm:</h4>
+                <ol>
+                    <li><strong>Sample:</strong> Randomly select minimal correspondence set</li>
+                    <li><strong>Estimate:</strong> Compute transformation from minimal set</li>
+                    <li><strong>Evaluate:</strong> Count inliers using distance threshold</li>
+                    <li><strong>Iterate:</strong> Repeat for maximum number of trials</li>
+                    <li><strong>Optimize:</strong> Least-squares refinement on best inlier set</li>
+                </ol>
+            </div>
+            
+            <div class="math-section">
+                <h4>Homography Estimation via SVD:</h4>
+                <img src="../images/homography-svd-derivation.png" alt="Homography SVD Mathematics" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                
+                <p><strong>SVD Solution:</strong> For the equation Ah = 0, the solution h is the right singular vector corresponding to the smallest singular value of A.</p>
+            </div>
+        </div>
+        
+        <h3>Part 4: Image Blending and Composition</h3>
+        <div class="implementation-section">
+            <p>Seamless composition of aligned images using advanced blending techniques.</p>
+            
+            <div class="blending-techniques">
+                <div class="blend-card">
+                    <h4>Feathering Blend</h4>
+                    <p>Distance-based weighting function for smooth transitions between images</p>
+                </div>
+                
+                <div class="blend-card">
+                    <h4>Alpha Compositing</h4>
+                    <p>Weighted accumulation with proper normalization to avoid artifacts</p>
+                </div>
+                
+                <div class="blend-card">
+                    <h4>Drift Correction</h4>
+                    <p>Linear warping to eliminate vertical misalignment in 360° panoramas</p>
+                </div>
+            </div>
+            
+            <div class="algorithm-steps">
+                <h4>Blending Pipeline:</h4>
+                <ol>
+                    <li><strong>Bounding Box Calculation:</strong> Determine final panorama dimensions</li>
+                    <li><strong>Inverse Warping:</strong> Resample each image to final coordinates</li>
+                    <li><strong>Weight Accumulation:</strong> Apply feathering weights during composition</li>
+                    <li><strong>Normalization:</strong> Divide by accumulated weights to avoid artifacts</li>
+                    <li><strong>[360° Only] Seam Blending:</strong> Perfect alignment at left/right edges</li>
+                </ol>
+            </div>
+            
+            <div class="math-section">
+                <h4>Feathering Weight Function:</h4>
+                <img src="../images/feathering-equation.png" alt="Feathering Weight Mathematics" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+            </div>
+        </div>
+        
+        <h2>My Results</h2>
+        
+        <div class="my-results">
+            <h3>Implementation Achievements</h3>
+            <p>Successfully implemented the complete autostitch pipeline with both translation and homography-based alignment methods.</p>
+        </div>
+        
+        <h3>Pipeline Visualization</h3>
+        <div class="results-grid">
+            <div class="result-item">
+                <img src="../images/autostitch-input-sequence.png" alt="Input Image Sequence" style="max-width: 100%; height: auto; border-radius: 4px;">
+                <div class="label">Input Image Sequence</div>
+                <div class="description">Overlapping photographs with ~50% overlap</div>
+            </div>
+            
+            <div class="result-item">
+                <img src="../images/autostitch-feature-matches.png" alt="Feature Matching Results" style="max-width: 100%; height: auto; border-radius: 4px;">
+                <div class="label">Feature Correspondences</div>
+                <div class="description">ORB features matched between adjacent images</div>
+            </div>
+        </div>
+        
+        <h3>Spherical Warping Results</h3>
+        <div class="results-grid">
+            <div class="result-item">
+                <img src="../images/autostitch-original-image.png" alt="Original Image" style="max-width: 100%; height: auto; border-radius: 4px;">
+                <div class="label">Original Image</div>
+                <div class="description">Planar projection from camera</div>
+            </div>
+            
+            <div class="result-item">
+                <img src="../images/autostitch-spherical-warped.png" alt="Spherically Warped Image" style="max-width: 100%; height: auto; border-radius: 4px;">
+                <div class="label">Spherically Warped</div>
+                <div class="description">Corrected for camera rotation and distortion</div>
+            </div>
+        </div>
+        
+        <h3>Final Panorama Results</h3>
+        <div class="panorama-showcase">
+            <div class="demo-image">
+                <img src="../images/autostitch-translation-panorama.png" alt="Translation-Based Panorama" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                <div class="caption">360° panorama using translation alignment with spherical warping</div>
+            </div>
+            
+            <div class="demo-image">
+                <img src="../images/autostitch-homography-panorama.png" alt="Homography-Based Panorama" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                <div class="caption">Planar panorama using homography alignment (handheld sequence)</div>
+            </div>
+        </div>
+        
+        <h2>Technical Challenges and Solutions</h2>
+        
+        <div class="challenge-section">
+            <h3>Key Implementation Challenges</h3>
+            <ul>
+                <li><strong>Homogeneous Coordinate Handling:</strong> Proper normalization when converting back to Cartesian coordinates</li>
+                <li><strong>Inverse Warping:</strong> Avoiding black pixels and implementing linear interpolation</li>
+                <li><strong>Memory Management:</strong> Efficient processing of high-resolution image sequences</li>
+                <li><strong>Drift Correction:</strong> Maintaining alignment in 360° panoramas with accumulating errors</li>
+                <li><strong>Exposure Differences:</strong> Handling illumination variations between images</li>
+            </ul>
+        </div>
+        
+        <h2>Key Learnings</h2>
+        
+        <div class="implementation-section">
+            <h3>Computer Vision Concepts</h3>
+            <ul>
+                <li><strong>Geometric Transformations:</strong> Deep understanding of homographies, translations, and spherical projections</li>
+                <li><strong>Robust Estimation:</strong> RANSAC algorithm for handling outliers in correspondence matching</li>
+                <li><strong>Image Warping:</strong> Forward vs. inverse warping, interpolation, and coordinate transformations</li>
+                <li><strong>Multi-Image Alignment:</strong> Global optimization and drift correction in image sequences</li>
+                <li><strong>Computational Photography:</strong> Blending algorithms and seamless image composition</li>
+            </ul>
+            
+            <h3>Mathematical Insights</h3>
+            <ul>
+                <li><strong>SVD Applications:</strong> Using singular value decomposition for homography estimation</li>
+                <li><strong>Projective Geometry:</strong> Working with homogeneous coordinates and projective transformations</li>
+                <li><strong>Optimization Theory:</strong> Least-squares refinement and robust statistical estimation</li>
+                <li><strong>Spherical Geometry:</strong> Coordinate system transformations and distortion models</li>
+            </ul>
+        </div>
+        
+        <h2>Extra Credit Explorations</h2>
+        
+        <div class="extra-credit-section">
+            <h3>Advanced Techniques Implemented</h3>
+            <div class="blending-techniques">
+                <div class="blend-card">
+                    <h4>Exposure Compensation</h4>
+                    <img src="../images/autostitch-exposure-correction.png" alt="Exposure Compensation" style="max-width: 100%; height: auto; border-radius: 4px;">
+                    <p>Automatic brightness adjustment between images</p>
+                </div>
+                
+                <div class="blend-card">
+                    <h4>Ghost Removal</h4>
+                    <img src="../images/autostitch-ghost-removal.png" alt="Moving Object Handling" style="max-width: 100%; height: auto; border-radius: 4px;">
+                    <p>Handling moving objects in overlapping regions</p>
+                </div>
+                
+                <div class="blend-card">
+                    <h4>Advanced Blending</h4>
+                    <img src="../images/autostitch-pyramid-blend.png" alt="Pyramid Blending" style="max-width: 100%; height: auto; border-radius: 4px;">
+                    <p>Multi-resolution pyramid blending for seamless transitions</p>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Applications and Impact</h2>
+        
+        <div class="key-info">
+            <h3>Real-World Applications</h3>
+            <p><strong>Virtual Reality:</strong> Creating immersive 360° environments for VR experiences</p>
+            <p><strong>Architectural Documentation:</strong> Complete building documentation and virtual tours</p>
+            <p><strong>Surveillance Systems:</strong> Wide-area monitoring with multiple camera feeds</p>
+            <p><strong>Scientific Imaging:</strong> Large-scale imaging in astronomy, microscopy, and remote sensing</p>
+            <p><strong>Mobile Photography:</strong> Automatic panorama modes in smartphone cameras</p>
+        </div>
+        
+        <div class="nav-back" style="margin-top: 50px; text-align: center;">
+            <a href="../index.html">← Back to All Projects</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CS5670 Project 4: Neural Radiance Fields (NeRF)</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Source Sans Pro', Helvetica, sans-serif;
+            background: #fff;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            font-weight: 300;
+            margin: 0 0 10px 0;
+            color: #2c3e50;
+        }
+        
+        .header .subtitle {
+            font-size: 1.2em;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+        }
+        
+        .nav-back {
+            text-align: left;
+            margin-bottom: 30px;
+        }
+        
+        .nav-back a {
+            color: #3498db;
+            text-decoration: none;
+            font-size: 0.9em;
+        }
+        
+        .nav-back a:hover {
+            text-decoration: underline;
+        }
+        
+        .project-overview {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        
+        .demo-image {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .demo-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .demo-image .caption {
+            font-style: italic;
+            color: #7f8c8d;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+        
+        h2 {
+            color: #2c3e50;
+            font-weight: 400;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+        
+        h3 {
+            color: #34495e;
+            font-weight: 400;
+            margin-top: 30px;
+        }
+        
+        .key-info {
+            background: #e8f4fd;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .key-info h3 {
+            margin-top: 0;
+            color: #2980b9;
+        }
+        
+        .key-info table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .key-info td {
+            padding: 8px 0;
+            vertical-align: top;
+        }
+        
+        .key-info td:first-child {
+            font-weight: 600;
+            width: 150px;
+        }
+        
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .result-item {
+            text-align: center;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .result-item img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        
+        .result-item .label {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .result-item .description {
+            font-size: 0.9em;
+            color: #7f8c8d;
+        }
+        
+        .implementation-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+        
+        .math-section {
+            background: #fff;
+            padding: 20px;
+            border-radius: 6px;
+            border-left: 4px solid #9b59b6;
+            margin: 20px 0;
+        }
+        
+        .algorithm-steps {
+            background: #fff;
+            padding: 20px;
+            border-radius: 6px;
+            border-left: 4px solid #e74c3c;
+        }
+        
+        .algorithm-steps ol {
+            margin: 0;
+            padding-left: 20px;
+        }
+        
+        .algorithm-steps li {
+            margin: 12px 0;
+            line-height: 1.6;
+        }
+        
+        .neural-network-section {
+            background: #fff;
+            padding: 20px;
+            border-radius: 6px;
+            border-left: 4px solid #8e44ad;
+            margin: 20px 0;
+        }
+        
+        .my-results {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+        
+        .my-results h3 {
+            color: #856404;
+            margin-top: 0;
+        }
+        
+        .pytorch-section {
+            background: #fef7f0;
+            border: 1px solid #f4d5a7;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+            border-left: 4px solid #e67e22;
+        }
+        
+        .pytorch-section h3 {
+            color: #d35400;
+            margin-top: 0;
+        }
+        
+        .nerf-pipeline {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .pipeline-step {
+            background: #fff;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+            border: 2px solid #ecf0f1;
+            position: relative;
+        }
+        
+        .pipeline-step h4 {
+            margin: 0 0 10px 0;
+            color: #2c3e50;
+            font-size: 0.9em;
+        }
+        
+        .pipeline-step .step-number {
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            background: #3498db;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+        
+        .positional-encoding-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .pe-card {
+            background: #fff;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+            border: 2px solid #ecf0f1;
+        }
+        
+        .pe-card h4 {
+            margin: 0 0 10px 0;
+            color: #2c3e50;
+        }
+        
+        .pe-card.no-pe {
+            border-color: #e74c3c;
+        }
+        
+        .pe-card.with-pe {
+            border-color: #27ae60;
+        }
+        
+        .video-showcase {
+            background: #f1f8ff;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 30px 0;
+            border-left: 4px solid #0366d6;
+        }
+        
+        .video-showcase h3 {
+            margin-top: 0;
+            color: #0366d6;
+        }
+        
+        .training-metrics {
+            background: #fff;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #d1ecf1;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        
+        .training-metrics h4 {
+            margin: 0 0 10px 0;
+            font-family: 'Source Sans Pro', sans-serif;
+            color: #0c5460;
+        }
+        
+        .extra-credit-section {
+            background: #f0f9ff;
+            border: 1px solid #bfdbfe;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+            border-left: 4px solid #3b82f6;
+        }
+        
+        .extra-credit-section h3 {
+            color: #1e40af;
+            margin-top: 0;
+        }
+        
+        .ray-tracing-section {
+            background: #fff;
+            padding: 20px;
+            border-radius: 6px;
+            border-left: 4px solid #16a085;
+            margin: 20px 0;
+        }
+        
+        .depth-map-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .depth-item {
+            background: #fff;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav-back">
+            <a href="../index.html">← Back to Projects</a>
+        </div>
+        
+        <div class="header">
+            <h1>Neural Radiance Fields (NeRF)</h1>
+            <div class="subtitle">CS5670 Project 4 - Introduction to Computer Vision</div>
+            <div class="subtitle">Cornell University, Spring 2025</div>
+        </div>
+        
+        <div class="project-overview">
+            <p><strong>Build Neural Radiance Fields (NeRF) with a set of images for novel view synthesis.</strong></p>
+            <p>This project implements the groundbreaking NeRF architecture from ECCV 2020, learning to represent 3D scenes as continuous neural radiance fields. Using only 2D images as supervision, we train deep networks to synthesize photorealistic novel views from arbitrary camera positions.</p>
+        </div>
+        
+        <div class="demo-image">
+            <img src="../images/nerf-360-showcase.gif" alt="NeRF 360° Novel View Synthesis" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+            <div class="caption">360° novel view synthesis: NeRF learns to render photorealistic views from any camera angle</div>
+        </div>
+        
+        <div class="key-info">
+            <h3>Project Details</h3>
+            <table>
+                <tr>
+                    <td>Assigned:</td>
+                    <td>Thursday, March 20, 2025</td>
+                </tr>
+                <tr>
+                    <td>Due:</td>
+                    <td>Friday, March 28, 2025</td>
+                </tr>
+                <tr>
+                    <td>Group Size:</td>
+                    <td>2 students</td>
+                </tr>
+                <tr>
+                    <td>Platform:</td>
+                    <td>Google Colab with PyTorch</td>
+                </tr>
+                <tr>
+                    <td>Key Concepts:</td>
+                    <td>Neural networks, ray tracing, volume rendering, positional encoding</td>
+                </tr>
+            </table>
+        </div>
+        
+        <h2>Overview</h2>
+        <p>Neural Radiance Fields (NeRF) represent a paradigm shift in 3D scene representation and novel view synthesis. Unlike traditional 3D reconstruction methods that build explicit geometric models, NeRF learns an implicit continuous volumetric representation using neural networks.</p>
+        
+        <p>The key insight is to represent a scene as a function that maps 3D coordinates and viewing directions to color and volume density, then use differentiable volume rendering to train this function from 2D images alone.</p>
+        
+        <h2>NeRF Architecture and Pipeline</h2>
+        
+        <div class="implementation-section">
+            <h3>Complete NeRF Pipeline</h3>
+            <div class="nerf-pipeline">
+                <div class="pipeline-step">
+                    <div class="step-number">1</div>
+                    <h4>Camera Ray Generation</h4>
+                    <p>Compute ray origins and directions through image pixels</p>
+                </div>
+                
+                <div class="pipeline-step">
+                    <div class="step-number">2</div>
+                    <h4>3D Point Sampling</h4>
+                    <p>Sample points along rays in 3D space</p>
+                </div>
+                
+                <div class="pipeline-step">
+                    <div class="step-number">3</div>
+                    <h4>Positional Encoding</h4>
+                    <p>Encode coordinates with high-frequency functions</p>
+                </div>
+                
+                <div class="pipeline-step">
+                    <div class="step-number">4</div>
+                    <h4>Neural Network</h4>
+                    <p>Predict color and density for each point</p>
+                </div>
+                
+                <div class="pipeline-step">
+                    <div class="step-number">5</div>
+                    <h4>Volume Rendering</h4>
+                    <p>Composite colors along rays to form images</p>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Implementation Details</h2>
+        
+        <h3>Part 1: Positional Encoding</h3>
+        <div class="implementation-section">
+            <p>Positional encoding enables neural networks to learn high-frequency functions by mapping coordinates to higher-dimensional spaces using trigonometric functions.</p>
+            
+            <div class="math-section">
+                <h4>Positional Encoding Mathematics:</h4>
+                <img src="../images/nerf-positional-encoding-equation.png" alt="Positional Encoding Formula" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                
+                <p><strong>Key Insight:</strong> Without positional encoding, MLPs exhibit a spectral bias toward low-frequency functions, leading to oversmoothed outputs that cannot capture fine details.</p>
+            </div>
+            
+            <div class="positional-encoding-demo">
+                <div class="pe-card no-pe">
+                    <h4>No Positional Encoding</h4>
+                    <img src="../images/nerf-no-pe-result.png" alt="Result without Positional Encoding" style="max-width: 100%; height: auto; border-radius: 4px;">
+                    <p>Oversmoothed, lacks detail</p>
+                </div>
+                
+                <div class="pe-card with-pe">
+                    <h4>PE Frequency = 3</h4>
+                    <img src="../images/nerf-pe-freq3-result.png" alt="Result with PE Frequency 3" style="max-width: 100%; height: auto; border-radius: 4px;">
+                    <p>Improved detail capture</p>
+                </div>
+                
+                <div class="pe-card with-pe">
+                    <h4>PE Frequency = 6</h4>
+                    <img src="../images/nerf-pe-freq6-result.png" alt="Result with PE Frequency 6" style="max-width: 100%; height: auto; border-radius: 4px;">
+                    <p>High-frequency details preserved</p>
+                </div>
+            </div>
+        </div>
+        
+        <h3>Part 2: Ray Tracing and 3D Sampling</h3>
+        <div class="implementation-section">
+            <p>For each pixel in the target image, we generate a camera ray and sample points along it to query the neural radiance field.</p>
+            
+            <div class="ray-tracing-section">
+                <h4>Camera Ray Generation:</h4>
+                <div class="algorithm-steps">
+                    <ol>
+                        <li><strong>Pixel to Camera:</strong> Convert pixel coordinates to camera coordinate system</li>
+                        <li><strong>Ray Origin:</strong> Camera center in world coordinates</li>
+                        <li><strong>Ray Direction:</strong> Unit vector from camera center through pixel</li>
+                        <li><strong>World Transform:</strong> Apply camera-to-world transformation matrix</li>
+                    </ol>
+                </div>
+                
+                <div class="math-section">
+                    <h4>Ray Equation:</h4>
+                    <img src="../images/nerf-ray-equation.png" alt="Camera Ray Mathematics" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                </div>
+                
+                <h4>3D Point Sampling:</h4>
+                <p>Sample points along each ray using stratified sampling to ensure good coverage of the 3D space while maintaining differentiability.</p>
+                
+                <img src="../images/nerf-ray-sampling-diagram.png" alt="Ray Sampling Visualization" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+            </div>
+        </div>
+        
+        <h3>Part 3: Neural Network Architecture</h3>
+        <div class="implementation-section">
+            <div class="neural-network-section">
+                <h4>NeRF Network Design:</h4>
+                <p>The NeRF MLP takes 5D input (3D position + 2D viewing direction) and outputs 4D (RGB color + volume density).</p>
+                
+                <img src="../images/nerf-network-architecture.png" alt="NeRF Neural Network Architecture" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                
+                <div class="algorithm-steps">
+                    <h4>Network Structure:</h4>
+                    <ol>
+                        <li><strong>Position Encoding:</strong> 3D coordinates → high-dimensional encoding</li>
+                        <li><strong>Density Branch:</strong> Position → volume density σ</li>
+                        <li><strong>Color Branch:</strong> Position + viewing direction → RGB color</li>
+                        <li><strong>Skip Connections:</strong> Improve gradient flow for deep networks</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        
+        <h3>Part 4: Volume Rendering</h3>
+        <div class="implementation-section">
+            <p>Volume rendering composites the colors and densities along each ray to produce the final pixel color using the classic volume rendering equation.</p>
+            
+            <div class="math-section">
+                <h4>Volume Rendering Equation:</h4>
+                <img src="../images/nerf-volume-rendering-equation.png" alt="Volume Rendering Mathematics" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                
+                <h4>Compositing Weights:</h4>
+                <img src="../images/nerf-compositing-weights.png" alt="Alpha Compositing Weights" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+            </div>
+            
+            <p><strong>Physical Interpretation:</strong> The volume density σ represents how much light is absorbed at each point, while the compositing weights determine how much each sample contributes to the final pixel color.</p>
+        </div>
+        
+        <h2>PyTorch Implementation</h2>
+        
+        <div class="pytorch-section">
+            <h3>Deep Learning Framework</h3>
+            <p>This project provided hands-on experience with PyTorch for computer vision and 3D deep learning:</p>
+            
+            <ul>
+                <li><strong>Tensor Operations:</strong> Efficient batch processing of rays and 3D points</li>
+                <li><strong>Automatic Differentiation:</strong> Gradient computation through the volume rendering process</li>
+                <li><strong>GPU Acceleration:</strong> Training on Google Colab's GPU infrastructure</li>
+                <li><strong>Custom Loss Functions:</strong> Photometric reconstruction loss between rendered and target images</li>
+                <li><strong>Model Optimization:</strong> Adam optimizer with learning rate scheduling</li>
+            </ul>
+        </div>
+        
+        <h2>My Results</h2>
+        
+        <div class="my-results">
+            <h3>Training Results and Metrics</h3>
+            <p>Successfully trained NeRF on the provided scene with convergence to high-quality novel view synthesis.</p>
+            
+            <div class="training-metrics">
+                <h4>Training Performance:</h4>
+                <strong>Iterations:</strong> 1000-3000 (10-30 minutes on GPU)<br>
+                <strong>Final PSNR:</strong> >20 dB (target quality threshold)<br>
+                <strong>Loss Function:</strong> L2 photometric reconstruction<br>
+                <strong>Optimizer:</strong> Adam with learning rate decay
+            </div>
+        </div>
+        
+        <h3>Training Progression</h3>
+        <div class="results-grid">
+            <div class="result-item">
+                <img src="../images/nerf-training-iteration-100.png" alt="Training at 100 iterations" style="max-width: 100%; height: auto; border-radius: 4px;">
+                <div class="label">100 Iterations</div>
+                <div class="description">Early training - blurry reconstruction</div>
+            </div>
+            
+            <div class="result-item">
+                <img src="../images/nerf-training-iteration-1000.png" alt="Training at 1000 iterations" style="max-width: 100%; height: auto; border-radius: 4px;">
+                <div class="label">1000 Iterations</div>
+                <div class="description">Converged model - sharp details</div>
+            </div>
+        </div>
+        
+        <h3>Novel View Synthesis Results</h3>
+        <div class="results-grid">
+            <div class="result-item">
+                <img src="../images/nerf-novel-view-1.png" alt="Novel View 1" style="max-width: 100%; height: auto; border-radius: 4px;">
+                <div class="label">Novel View 1</div>
+                <div class="description">Photorealistic rendering from unseen angle</div>
+            </div>
+            
+            <div class="result-item">
+                <img src="../images/nerf-novel-view-2.png" alt="Novel View 2" style="max-width: 100%; height: auto; border-radius: 4px;">
+                <div class="label">Novel View 2</div>
+                <div class="description">Consistent geometry and lighting</div>
+            </div>
+        </div>
+        
+        <h3>Depth Maps and 3D Understanding</h3>
+        <div class="depth-map-grid">
+            <div class="depth-item">
+                <img src="../images/nerf-depth-map.png" alt="NeRF Depth Map" style="max-width: 100%; height: auto; border-radius: 4px;">
+                <div class="label">Learned Depth Map</div>
+                <div class="description">NeRF implicitly learns scene geometry</div>
+            </div>
+            
+            <div class="depth-item">
+                <img src="../images/nerf-density-visualization.png" alt="Volume Density Visualization" style="max-width: 100%; height: auto; border-radius: 4px;">
+                <div class="label">Volume Density Field</div>
+                <div class="description">3D structure representation</div>
+            </div>
+        </div>
+        
+        <h2>360° Video Synthesis</h2>
+        
+        <div class="video-showcase">
+            <h3>Complete 360° Novel View Synthesis</h3>
+            <div class="demo-image">
+                <img src="../images/nerf-360-video-frames.png" alt="360° Video Frame Sequence" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                <div class="caption">Frame sequence from 360° rotation around the scene</div>
+            </div>
+            
+            <p><strong>Video Generation Process:</strong> Generate camera poses in a circular path around the object, render images from each viewpoint using the trained NeRF, and composite into a smooth 360° video.</p>
+            
+            <div class="training-metrics">
+                <h4>Video Specifications:</h4>
+                <strong>Resolution:</strong> 800×800 pixels<br>
+                <strong>Frame Count:</strong> 40 frames (360° rotation)<br>
+                <strong>Render Time:</strong> ~2-3 seconds per frame<br>
+                <strong>Camera Path:</strong> Circular orbit around scene center
+            </div>
+        </div>
+        
+        <h2>Extra Credit: Custom Dataset</h2>
+        
+        <div class="extra-credit-section">
+            <h3>Training NeRF on Personal Photography</h3>
+            <div class="results-grid">
+                <div class="result-item">
+                    <img src="../images/nerf-custom-input-photos.png" alt="Custom Input Images" style="max-width: 100%; height: auto; border-radius: 4px;">
+                    <div class="label">Custom Input Images</div>
+                    <div class="description">LLFF-style forward-facing capture</div>
+                </div>
+                
+                <div class="result-item">
+                    <img src="../images/nerf-custom-novel-views.png" alt="Custom Novel Views" style="max-width: 100%; height: auto; border-radius: 4px;">
+                    <div class="label">Novel View Results</div>
+                    <div class="description">Synthesized views of personal scene</div>
+                </div>
+            </div>
+            
+            <p><strong>Data Capture Process:</strong> Following LLFF methodology for forward-facing scenes, using COLMAP for camera pose estimation, and training NeRF with custom photographs to demonstrate real-world applicability.</p>
+        </div>
+        
+        <h2>Key Learnings</h2>
+        
+        <div class="implementation-section">
+            <h3>Computer Vision and Deep Learning Concepts</h3>
+            <ul>
+                <li><strong>Neural Implicit Representations:</strong> Understanding how neural networks can represent continuous 3D functions</li>
+                <li><strong>Volume Rendering:</strong> Classical computer graphics techniques applied to neural representations</li>
+                <li><strong>Differentiable Rendering:</strong> Making graphics pipelines trainable with gradient descent</li>
+                <li><strong>High-Frequency Modeling:</strong> Positional encoding's role in capturing fine details</li>
+                <li><strong>3D Scene Understanding:</strong> Learning geometry and appearance from 2D supervision alone</li>
+            </ul>
+            
+            <h3>Technical Skills Developed</h3>
+            <ul>
+                <li><strong>PyTorch Proficiency:</strong> Deep learning framework for computer vision applications</li>
+                <li><strong>3D Mathematics:</strong> Camera models, ray tracing, and coordinate transformations</li>
+                <li><strong>GPU Computing:</strong> Efficient tensor operations and memory management</li>
+                <li><strong>Optimization Techniques:</strong> Training strategies for neural implicit functions</li>
+                <li><strong>Performance Analysis:</strong> PSNR metrics and convergence evaluation</li>
+            </ul>
+        </div>
+        
+        <h2>Impact and Applications</h2>
+        
+        <div class="key-info">
+            <h3>Revolutionary Applications</h3>
+            <p><strong>Virtual Reality:</strong> Photorealistic VR environments from simple photo captures</p>
+            <p><strong>Film and Media:</strong> Novel view synthesis for cinematography and special effects</p>
+            <p><strong>3D Content Creation:</strong> Democratizing 3D modeling through neural representations</p>
+            <p><strong>Robotics:</strong> 3D scene understanding for navigation and manipulation</p>
+            <p><strong>Cultural Preservation:</strong> Digital documentation of historical sites and artifacts</p>
+            <p><strong>Medical Imaging:</strong> 3D reconstruction from sparse medical scans</p>
+        </div>
+        
+        <div class="nav-back" style="margin-top: 50px; text-align: center;">
+            <a href="../index.html">← Back to All Projects</a>
+        </div>
+    </div>
+</body>
+</html>

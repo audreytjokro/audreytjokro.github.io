@@ -24,6 +24,102 @@
 
 </head>
 
+  <!-- Hover Effect CSS for Project Thumbnails -->
+  <style>
+    .project-thumbnail-rotate img {
+      transition: transform 0.4s ease-in-out;
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 4px;
+    }
+
+    .project-thumbnail-rotate:hover img {
+      transform: rotate(180deg);
+    }
+
+    .project-thumbnail-hover {
+      position: relative;
+      width: 100%;
+      height: auto;
+      cursor: pointer;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .project-thumbnail-hover img {
+      width: 100%;
+      height: auto;
+      max-width: 100%;
+      transition: opacity 0.4s ease-in-out;
+      display: block;
+    }
+
+    .project-thumbnail-hover .hover-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+    }
+
+    .project-thumbnail-hover:hover .hover-image {
+      opacity: 1;
+    }
+
+    .project-thumbnail-hover:hover .default-image {
+      opacity: 0;
+    }
+
+    .project-thumbnail-dissolve {
+      width: 100%;
+      height: auto;
+      position: relative;
+      overflow: hidden;
+      margin: -5px;
+      padding: 5px;
+    }
+
+    .project-thumbnail-dissolve img {
+      width: 100%;
+      height: auto;
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .project-thumbnail-dissolve .original {
+      z-index: 1;
+      opacity: 1;
+    }
+
+    .project-thumbnail-dissolve:hover .original {
+      opacity: 0;
+    }
+
+    /* Ensure consistent sizing */
+    .project-thumbnail-hover .default-image,
+    .project-thumbnail-hover .hover-image {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+
+    /* Mobile touch support */
+    @media (max-width: 768px) {
+      .project-thumbnail-hover:active .hover-image {
+        opacity: 1;
+      }
+      
+      .project-thumbnail-hover:active .default-image {
+        opacity: 0;
+      }
+    }
+  </style>
+
+</head>
+
 <body>
   <table style="width:100%;max-width:800px;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
     <tr style="padding:0px">
@@ -57,7 +153,7 @@
           </tr>
         </table>
 
-        <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+        <!-- <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
           <tr>
             <td style="padding:2.5%;width:100%;vertical-align:middle">
               <h2>Research</h2>
@@ -67,9 +163,9 @@
             </td>
           </tr>
         </table>
-        <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+        <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"> -->
 
-  {% assign cutoff = '2024-01-01' | date: "%s" %}
+  <!-- {% assign cutoff = '2024-01-01' | date: "%s" %}
   
   {% for post in site.posts %}
     {% assign post_date = post.date | date: "%s" %}
@@ -78,7 +174,23 @@
         {% if cat == 'research' %}
           <tr>
             <td style="padding:2.5%;width:25%;vertical-align:middle;min-width:120px">
-              <img src="/tn{{post.image}}" alt="project image" style="width:auto; height:auto; max-width:100%;" />
+              {% if post.rotate-on-hover %}
+                <div class="project-thumbnail-rotate">
+                  <img src="/tn{{post.image}}" alt="project image" />
+                </div>
+              {% elsif post.dissolve-on-hover %}
+                <div class="project-thumbnail-dissolve image-container" style="position: relative;">
+                  <img class="dissolve-image original" src="/tn{{post.image}}" alt="original image">
+                  <img class="dissolve-image" src="/tn{{post.hover-image}}" alt="dissolve image">
+                </div>
+              {% elsif post.hover-image %}
+                <div class="project-thumbnail-hover">
+                  <img class="default-image" src="/tn{{post.image}}" alt="project image" />
+                  <img class="hover-image" src="/tn{{post.hover-image}}" alt="hover image" />
+                </div>
+              {% else %}
+                <img src="/tn{{post.image}}" alt="project image" style="width:auto; height:auto; max-width:100%;" />
+              {% endif %}
             </td>
             <td style="padding:2.5%;width:75%;vertical-align:middle">
               <h3>{{post.title}}</h3>
@@ -88,8 +200,8 @@
               <br>
               <em>{{post.venue}}</em>, {{ post.date | date: "%Y" }}
               <br>
-              {% if post.arxiv %}
-              <a href="{{post.arxiv}}">arxiv</a> /
+              {% if post.project-page %}
+              <a href="{{post.project-page}}">project page</a> /
               {% endif %}
               {% if post.video %}
               <a href="{{post.video}}">video</a> /
@@ -120,12 +232,12 @@
         </table>
         <br>
         <br>
-        <br>
+        <br> -->
 
         <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
           <tr>
             <td style="padding:2.5%;width:100%;vertical-align:middle">
-              <h2>Other Projects</h2>
+              <h2>Projects</h2>
               <p> These include coursework, side projects and unpublished research work. 
               </p>
             </td>
@@ -142,7 +254,23 @@
           {% if cat != 'research' %}
           <tr>
             <td style="padding:2.5%;width:25%;vertical-align:middle;min-width:120px">
-              <img src="/tn{{post.image}}" alt="project image" style="width:auto; height:auto; max-width:100%;" />
+              {% if post.rotate-on-hover %}
+                <div class="project-thumbnail-rotate">
+                  <img src="/tn{{post.image}}" alt="project image" />
+                </div>
+              {% elsif post.dissolve-on-hover %}
+                <div class="project-thumbnail-dissolve image-container" style="position: relative;">
+                  <img class="dissolve-image original" src="/tn{{post.image}}" alt="original image">
+                  <img class="dissolve-image" src="/tn{{post.hover-image}}" alt="dissolve image">
+                </div>
+              {% elsif post.hover-image %}
+                <div class="project-thumbnail-hover">
+                  <img class="default-image" src="/tn{{post.image}}" alt="project image" />
+                  <img class="hover-image" src="/tn{{post.hover-image}}" alt="hover image" />
+                </div>
+              {% else %}
+                <img src="/tn{{post.image}}" alt="project image" style="width:auto; height:auto; max-width:100%;" />
+              {% endif %}
             </td>
             <td style="padding:2.5%;width:75%;vertical-align:middle">
               <h3>{{post.title}}</h3>
@@ -152,20 +280,11 @@
               {{ post.date | date: "%Y-%m-%d" }}
 
               <br>
-              {% if post.website %}
-              <a href="{{post.website}}">website</a> /
+              {% if post.project-page %}
+              <a href="{{post.project-page}}">project page</a> /
               {% endif %}
               {% if post.paper %}
               <a href="{{post.paper}}">paper</a> /
-              {% endif %}
-              {% if post.patent %}
-              <a href="{{post.patent}}">patent</a> /
-              {% endif %}
-              {% if post.patent2 %}
-              <a href="{{post.patent2}}">patent #2</a> /
-              {% endif %}
-              {% if post.patent3 %}
-              <a href="{{post.patent3}}">patent #3</a> /
               {% endif %}
               {% if post.video %}
               <a href="{{post.video}}">video</a> /

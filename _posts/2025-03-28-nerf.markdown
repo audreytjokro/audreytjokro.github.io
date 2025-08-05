@@ -1,0 +1,18 @@
+---
+layout: post
+title: "Neural Radiance Fields (NeRF)"
+date: 2025-03-28 00:00:00 +0000
+image: /images/nerf-static-scene.png
+hover-image: /images/nerf-360-rotation.gif
+categories: Cornell
+course: CS5670 Computer Vision
+author: Audrey Tjokro
+subtitle: Neural implicit 3D representations and novel view synthesis
+# project-page: https://audreytjokro.github.io/projects/cs5670-project4-nerf.html
+---
+
+Implemented Neural Radiance Fields (NeRF) from the groundbreaking ECCV 2020 paper, learning to represent 3D scenes as continuous neural functions. Using only 2D images as supervision, trained deep networks to synthesize photorealistic novel views from arbitrary camera positions. I built the neural network design, training optimization, and novel view synthesis evaluation. Achieved >20 PSNR convergence and generated smooth 360° video outputs.
+
+**Key Implementation:** Complete NeRF pipeline including positional encoding for high-frequency detail capture, camera ray generation and 3D point sampling, neural network architecture with density and color prediction, and differentiable volume rendering for end-to-end training.
+
+**Technical Skills:** PyTorch deep learning, neural implicit representations, volume rendering, ray tracing mathematics, 3D coordinate transformations, GPU optimization
