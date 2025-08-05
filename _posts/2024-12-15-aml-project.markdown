@@ -7,7 +7,7 @@ categories: Cornell
 course: CS5785 Applied Machine Learning
 author: Audrey Tjokro
 subtitle: Comparative analysis of Faster R-CNN architectures for medical image classification
-project-page: https://audreytjokro.github.io/projects/ccs5786-aml-project.html
+project-page: https://audreytjokro.github.io/projects/cs5786-aml-project.html
 ---
 
 This project explores automated pneumonia detection in chest X-rays using three distinct Faster R-CNN implementations with different backbone architectures and optimization strategies. Working with the RSNA Pneumonia Detection Challenge dataset containing over 26,000 chest X-ray images, we implemented and compared PyTorch Faster R-CNN with ResNet-50 and Adam optimizer, Faster R-CNN with ImageNet-pretrained ResNet-50, and PyTorch Faster R-CNN with ResNet-50-FPN and SGD optimizer.
