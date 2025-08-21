@@ -3,7 +3,7 @@ layout: post
 title: "Real-time WebGL PBR Material Renderer"
 date: 2025-08-13 00:00:00 +0000
 image: /images/pbr.png
-categories: Personal
+categories: Cornell
 author: Audrey Tjokro
 subtitle: Interactive physically-based rendering engine with material editor
 project-page: https://audreytjokro.github.io/pbr-renderer/
