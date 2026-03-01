@@ -130,11 +130,11 @@
               <h1>
                 Audrey Tjokro
               </h1>
-              <p>I am a prospective PhD student with an interest in 3D computer vision and graphics. I’m currently seeking full-time research assistant positions beginning in Summer or Fall 2026, ideally in labs focused on vision, generative models, and interactive or spatial reasoning.
+              <p>I'm an AI product manager and engineer with hands-on experience in computer vision, ML systems, and hardware optimization. I'm seeking full-time roles in product, engineering, or research starting Summer/Fall 2026 — ideally at teams working on inference efficiency, generative models, or spatial AI.
               </p>
               
               <p>
-                I have an MS in Information and Computer Science from <a href="https://tech.cornell.edu/">Cornell Tech</a>, where I was a research assistant for <a href="https://tech.cornell.edu/people/wendy-ju/">Wendy Ju</a> and a teaching assistant for <a href="https://ajhconway.com/">Alex Conway</a> (<a href="https://github.com/ajhconway/cs5112-fall2024/">CS5112</a>). I have a BA in Information Systems from the <a href="https://www.washington.edu/">University of Washington</a>.
+                I have an MS in Information Science and Computer Engineering from <a href="https://tech.cornell.edu/">Cornell Tech</a>, where I was a research assistant for <a href="https://tech.cornell.edu/people/wendy-ju/">Wendy Ju</a> and a teaching assistant for <a href="https://ajhconway.com/">Alex Conway</a> (<a href="https://github.com/ajhconway/cs5112-fall2024/">CS5112</a>). I have a BA in Information Systems from the <a href="https://www.washington.edu/">University of Washington</a>.
               </p>
 
               <p>
@@ -153,25 +153,24 @@
           </tr>
         </table>
 
-        <!-- <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+        <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
           <tr>
             <td style="padding:2.5%;width:100%;vertical-align:middle">
               <h2>Research</h2>
               <p>
-                I'm interested in computer vision, machine learning, graphics and robotics.
+                I'm interested in machine learning, computer vision, graphics, and hardware systems.
               </p>
             </td>
           </tr>
         </table>
-        <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"> -->
+        <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"> 
 
-  <!-- {% assign cutoff = '2024-01-01' | date: "%s" %}
+  {% assign cutoff = '2024-01-01' | date: "%s" %}
   
   {% for post in site.posts %}
     {% assign post_date = post.date | date: "%s" %}
     {% if post_date >= cutoff %}
-      {% for cat in post.categories %}
-        {% if cat == 'research' %}
+      {% if post.categories contains 'research' %}
           <tr>
             <td style="padding:2.5%;width:25%;vertical-align:middle;min-width:120px">
               {% if post.rotate-on-hover %}
@@ -226,13 +225,12 @@
             </td>
           </tr>
           {% endif %}
-          {% endfor %}
         {% endif %}
-      {% endfor %}
+        {% endfor %}
         </table>
         <br>
         <br>
-        <br> -->
+        <br>
 
         <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
           <tr>
@@ -247,11 +245,10 @@
 
     {% assign cutoff = '2024-01-01' | date: "%s" %}
     
-    {% for post in site.posts %}
+  {% for post in site.posts %}
       {% assign post_date = post.date | date: "%s" %}
       {% if post_date >= cutoff %}
-        {% for cat in post.categories %}
-          {% if cat != 'research' %}
+        {% unless post.categories contains 'research' %}
           <tr>
             <td style="padding:2.5%;width:25%;vertical-align:middle;min-width:120px">
               {% if post.rotate-on-hover %}
@@ -305,10 +302,9 @@
               {{ post.excerpt }}
             </td>
           </tr>
-          {% endif %}
-          {% endfor %}
-          {% endif %}
-          {% endfor %}
+          {% endunless %}
+        {% endif %}   
+      {% endfor %}
         </table>
 
         <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
