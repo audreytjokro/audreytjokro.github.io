@@ -1,0 +1,18 @@
+---
+layout: post
+title: "SIMD Optimization of GPT-2 Inference: 3.2× Speedup via AVX2 Vectorization"
+date: 2025-12-01 22:21:59 +00:00
+image: /images/gpt2-simd.png
+categories: Cornell
+course: Tech
+author: Audrey Tjokro
+subtitle: PMU-guided AVX2 optimization and pipeline bottleneck analysis
+
+---
+
+Profiled a GPT-2 forward pass implementation to identify linear() as a 98.6% runtime 
+bottleneck, then optimized the inner dot-product with AVX2 SIMD intrinsics, achieving 
+a 3.2× per-forward speedup (1.35s → 0.42s) while preserving correctness. Validated 
+with perf stat hardware counters and Top-Down (toplev -l2) pipeline analysis — the 
+optimized kernel shifted from Retiring-dominated to Backend/Core-Bound, consistent 
+with the compute becoming vectorization-saturated rather than instruction-limited.

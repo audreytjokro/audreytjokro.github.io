@@ -1,0 +1,14 @@
+---
+layout: post
+title:  "Using Vision-Language Models as Proxies for Social Intelligence in Human-Robot Interaction"
+date:   2025-12-08 22:21:59 +00:00
+image: /images/vlm-hri.png
+categories: research
+author: "Audrey Tjokro"
+authors: "Frank Bu, <strong>Audrey Tjokro</strong>"
+venue: "arXiv"
+arxiv: https://arxiv.org/abs/2512.07177
+# code: https://github.com/leonidk/fmb-plus
+# website: https://leonidk.github.io/fmb-plus
+---
+How do robots decide when to engage with people? We deployed a mobile service robot in a university cafe for five days, studying how people signal interaction readiness through nonverbal cues like gaze and proximity. We propose a lightweight two-stage pipeline that uses these cues to selectively trigger VLM queries at socially meaningful moments — enabling robots to engage naturally without constant heavy inference.
