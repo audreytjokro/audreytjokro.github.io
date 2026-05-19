@@ -1,0 +1,13 @@
+---
+layout: post
+title: "Echofeed"
+date: 2026-04-15 22:21:59 +00:00
+image: /images/echofeed.png
+categories: Cornell
+course: Studio
+author: Audrey Tjokro
+project-page: https://echofeed-waitlist.vercel.app/#
+app-store-page: https://testflight.apple.com/join/b8pMrNjK
+---
+
+EchoFeed turns the content you save across platforms into a personal reinforcement feed. It watches what you save, finds the patterns, and serves it back to you in the right context. We ideated, conducted validation research, and launched on Testflight. This was built as part of Startup Studio at Cornell Tech.
