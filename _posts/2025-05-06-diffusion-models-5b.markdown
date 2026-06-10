@@ -4,7 +4,7 @@ title: "Training Diffusion Models from Scratch"
 date: 2025-05-06 00:00:00 +0000
 image: /images/old-man-static.png 
 categories: Cornell
-course: CS5670: Computer Vision
+course: "CS5670: Computer Vision"
 author: Audrey Tjokro
 subtitle: UNet architectures, DDPM training, and class-conditioned generation on MNIST
 # project-page: https://audreytjokro.github.io/projects/cs5670-project5b-training-diffusion.html

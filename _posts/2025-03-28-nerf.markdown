@@ -5,7 +5,7 @@ date: 2025-03-28 00:00:00 +0000
 image: /images/nerf-static-scene.png
 hover-image: /images/nerf-360-rotation.gif
 categories: Cornell
-course: CS5670: Computer Vision
+course: "CS5670: Computer Vision"
 author: Audrey Tjokro
 subtitle: Neural implicit 3D representations and novel view synthesis
 # project-page: https://audreytjokro.github.io/projects/cs5670-project4-nerf.html

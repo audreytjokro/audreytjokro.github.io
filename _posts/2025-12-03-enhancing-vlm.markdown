@@ -5,7 +5,7 @@ date: 2025-12-03 00:00:00 +0000
 image: /images/dl-header.png
 # hover-image: /images/vlm-camera-after.gif
 categories: Cornell
-course: CS5787: Deep Learning
+course: "CS5787: Deep Learning"
 author: Audrey Tjokro
 subtitle: Improving VLM camera-motion interpretation and scene understanding through in-context learning
 # project-page: https://audreytjokro.github.io/projects/vlm-camera-scene-understanding.html
