@@ -5,8 +5,8 @@ date:   2025-12-08 22:21:59 +00:00
 image: /images/vlm-hri.png
 categories: research
 author: "Audrey Tjokro"
-authors: "Frank Bu, <strong>Audrey Tjokro</strong>, Wendy Ju"
-venue: "arXiv"
+authors: "Frank Bu, Melina Tsai, <strong>Audrey Tjokro</strong>, Tapomayukh Bhattacharjee, Jorge Ortiz, Wendy Ju"
+venue: "CVPR Workshops (Computer-Vision-in-the-Wild), 2026"
 arxiv: https://arxiv.org/abs/2512.07177
 # code: https://github.com/leonidk/fmb-plus
 # website: https://leonidk.github.io/fmb-plus
