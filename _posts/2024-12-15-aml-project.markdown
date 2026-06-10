@@ -4,7 +4,7 @@ title: "Automated Pneumonia Detection using Deep Learning"
 date: 2024-12-15 00:00:00 +0000
 image: /images/rsna-thumbnail.png
 categories: Cornell
-course: CS5785 Applied Machine Learning
+course: CS5785: Applied Machine Learning
 author: Audrey Tjokro
 subtitle: Comparative analysis of Faster R-CNN architectures for medical image classification
 project-page: https://audreytjokro.github.io/projects/cs5785-aml-project.html

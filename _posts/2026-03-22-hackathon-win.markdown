@@ -4,7 +4,7 @@ title: "EmpireHacks 2026 Hackathon Win: DarcMind"
 date: 2026-03-22 22:21:59 +00:00
 image: /images/empirehacks-poster.png
 categories: Cornell
-course: EmpireHacks 2026
+course: Hackathon: EmpireHacks 2026
 author: Audrey Tjokro
 subtitle: My team won the sidekick track! These are tools that adapt to people and strengthen the part of the work that should stay human.
 project-page: https://darcmind-dnd.vercel.app/dashboard

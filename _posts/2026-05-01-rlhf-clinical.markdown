@@ -4,7 +4,7 @@ title: "Adversarial Multi-Turn Dynamics: Red-Teaming Clinical LLMs with RLHF"
 date: 2026-05-01 22:21:59 +00:00
 image: /images/Red-teaming-agent-diagram.png
 categories: Cornell
-course: Generative Models
+course: CS5788: Generative Models
 author: Audrey Tjokro, Stephen Dong, Niki Karanikola
 # project-page: 
 paper: /pdfs/adversarial-clinical-llms.pdf

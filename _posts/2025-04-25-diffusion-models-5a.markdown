@@ -5,7 +5,7 @@ date: 2025-04-25 00:00:00 +0000
 image: /images/cornell-tower-hole.png
 hover-image: /images/cornell-inpainted.png 
 categories: Cornell
-course: CS5670 Computer Vision
+course: CS5670: Computer Vision
 author: Audrey Tjokro
 subtitle: Implementing sampling loops and creative applications with DeepFloyd IF
 # project-page: https://audreytjokro.github.io/projects/cs5670-project5a-diffusion-models.html
