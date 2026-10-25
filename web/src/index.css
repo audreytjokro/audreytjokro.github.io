@@ -1,0 +1,110 @@
+@import "./styles/tokens.css";
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-serif);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  color: inherit;
+}
+
+p,
+h1,
+h2,
+h3 {
+  margin: 0;
+}
+
+/* Text styles, from the Figma design system */
+
+.text-heading {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  font-size: 50px;
+  line-height: 1.2;
+  letter-spacing: -2.25px;
+}
+
+@media (max-width: 900px) {
+  .text-heading {
+    font-size: 34px;
+    letter-spacing: -1.5px;
+  }
+}
+
+.text-body {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 1.52;
+  letter-spacing: -1.08px;
+}
+
+@media (max-width: 900px) {
+  .text-body {
+    font-size: 18px;
+    letter-spacing: -0.8px;
+  }
+}
+
+.text-link-1 {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.03;
+  letter-spacing: -0.72px;
+}
+
+.text-link-2 {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.03;
+  letter-spacing: -0.72px;
+  text-underline-offset: 2px;
+}
+
+.text-caption {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.25;
+  letter-spacing: -0.72px;
+}
+
+.text-caption-2 {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.03;
+  letter-spacing: -0.72px;
+  text-underline-offset: 2px;
+}
+
+.text-caption-3 {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.03;
+  letter-spacing: -0.72px;
+}

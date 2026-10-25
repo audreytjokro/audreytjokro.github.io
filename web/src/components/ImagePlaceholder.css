@@ -1,0 +1,30 @@
+.image-placeholder {
+  width: 100%;
+  min-height: 200px;
+  background: repeating-linear-gradient(
+    45deg,
+    var(--color-placeholder),
+    var(--color-placeholder) 10px,
+    #ececec 10px,
+    #ececec 20px
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 16px;
+}
+
+.image-placeholder--rounded {
+  border-radius: 4px;
+}
+
+.image-placeholder span {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: -0.3px;
+  color: #6b6b6b;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 4px 8px;
+  border-radius: 2px;
+}

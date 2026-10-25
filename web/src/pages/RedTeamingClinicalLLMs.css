@@ -1,0 +1,38 @@
+.red-teaming__section {
+  max-width: var(--content-max-width);
+  width: 100%;
+  margin: 0 auto;
+  padding: 60px var(--page-gutter);
+  border-top: 0.5px solid var(--color-divider);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.red-teaming__eyebrow {
+  opacity: 0.6;
+}
+
+.red-teaming__paragraph {
+  max-width: 720px;
+}
+
+.red-teaming__diagram {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+.red-teaming__links {
+  max-width: var(--content-max-width);
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px var(--page-gutter) 80px;
+}
+
+@media (max-width: 900px) {
+  .red-teaming__section {
+    padding: 40px var(--page-gutter);
+  }
+}

@@ -1,0 +1,22 @@
+.stacked-page {
+  max-width: var(--content-max-width);
+  width: 100%;
+  margin: 0 auto;
+  padding: 140px var(--page-gutter) 60px;
+}
+
+.stacked-page__section {
+  max-width: 1080px;
+}
+
+.stacked-page__section--stack {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+@media (max-width: 900px) {
+  .stacked-page {
+    padding: 100px var(--page-gutter) 40px;
+  }
+}

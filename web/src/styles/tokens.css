@@ -1,0 +1,25 @@
+:root {
+  --color-bg: #ffffff;
+  --color-text: #000000;
+
+  --color-accent-blue: #0034ad;
+  --color-accent-pink: #ab0782;
+  --color-accent-olive: #6e660a;
+  --color-accent-purple: #5f00ad;
+
+  --color-divider: #4f4f4f;
+  --color-divider-light: #e9e9e9;
+  --color-placeholder: #d9d9d9;
+
+  --font-serif: "Source Serif Pro", Georgia, serif;
+  --font-mono: "Source Code Pro", "SFMono-Regular", Menlo, monospace;
+
+  --content-max-width: 1500px;
+  --page-gutter: 50px;
+}
+
+@media (max-width: 900px) {
+  :root {
+    --page-gutter: 20px;
+  }
+}

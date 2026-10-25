@@ -1,0 +1,26 @@
+.button {
+  --button-color: var(--color-text);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 10px 7px;
+  border: 1px solid var(--button-color);
+  color: var(--button-color);
+  font-family: var(--font-mono);
+  font-size: 16px;
+  letter-spacing: -0.72px;
+  line-height: 1.03;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  background: transparent;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.button:hover {
+  background: var(--button-color);
+  color: var(--color-bg);
+}

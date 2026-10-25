@@ -1,0 +1,30 @@
+.home__intro {
+  max-width: var(--content-max-width);
+  width: 100%;
+  margin: 0 auto;
+  padding: 140px var(--page-gutter) 60px;
+}
+
+.home__intro p {
+  max-width: 1000px;
+}
+
+.home__closing {
+  max-width: var(--content-max-width);
+  width: 100%;
+  margin: 0 auto;
+  padding: 30px var(--page-gutter) 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.home__closing p {
+  max-width: 800px;
+}
+
+@media (max-width: 900px) {
+  .home__intro {
+    padding: 100px var(--page-gutter) 40px;
+  }
+}

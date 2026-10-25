@@ -1,0 +1,79 @@
+.smell-ml__section {
+  max-width: var(--content-max-width);
+  width: 100%;
+  margin: 0 auto;
+  padding: 80px var(--page-gutter);
+  border-top: 0.5px solid var(--color-divider);
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.smell-ml__eyebrow {
+  opacity: 0.6;
+}
+
+.smell-ml__heading {
+  max-width: 800px;
+}
+
+.smell-ml__paragraph {
+  max-width: 640px;
+}
+
+.smell-ml__hero-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-top: 16px;
+  border-radius: 4px;
+}
+
+.smell-ml__figure {
+  margin: 16px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.smell-ml__concept-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+.smell-ml__caption {
+  max-width: 560px;
+  opacity: 0.7;
+}
+
+.smell-ml__approach-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+}
+
+.smell-ml__team {
+  max-width: var(--content-max-width);
+  width: 100%;
+  margin: 0 auto;
+  padding: 40px var(--page-gutter) 0;
+  opacity: 0.5;
+}
+
+.smell-ml__links {
+  max-width: var(--content-max-width);
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px var(--page-gutter) 80px;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 900px) {
+  .smell-ml__section {
+    padding: 50px var(--page-gutter);
+  }
+}

@@ -1,0 +1,26 @@
+.approach-card {
+  border: 1px solid var(--color-divider-light);
+  border-radius: 10px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.approach-card__emoji {
+  font-size: 28px;
+  line-height: 1;
+}
+
+.approach-card__title {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 18px;
+  letter-spacing: -0.4px;
+  color: var(--color-text);
+}
+
+.approach-card__description {
+  opacity: 0.75;
+}
