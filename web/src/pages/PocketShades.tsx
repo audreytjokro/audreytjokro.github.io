@@ -1,7 +1,7 @@
 import ProjectHeader from "../components/ProjectHeader";
 import ImagePlaceholder from "../components/ImagePlaceholder";
 import ApproachCard from "../components/ApproachCard";
-import Timeline from "../components/Timeline";
+import PaperNote from "../components/PaperNote";
 import Button from "../components/Button";
 import heroFinalPrototype from "../assets/pocket-shades/hero-final-prototype.webp";
 import initialSketches from "../assets/pocket-shades/initial-sketches.webp";
@@ -15,6 +15,7 @@ import foldingSequence from "../assets/pocket-shades/folding-sequence.webp";
 import chicagoScrews from "../assets/pocket-shades/chicago-screws.webp";
 import foldingDesigns from "../assets/pocket-shades/folding-designs.webp";
 import visualIdentity from "../assets/pocket-shades/visual-identity.webp";
+import giantHeader from "../assets/pocket-shades/giant-header.webp";
 import "./PocketShades.css";
 
 type StaggeredImage = {
@@ -89,6 +90,13 @@ const responsibilities = [
 export default function PocketShades() {
   return (
     <div className="pocket-shades">
+      <div className="pocket-shades__giant-header">
+        <img
+          src={giantHeader}
+          alt="Olive and orange Pocket Shades sunglasses, one pair open and one shown folded"
+          className="pocket-shades__giant-header-image"
+        />
+      </div>
       <ProjectHeader
         category="Design"
         title="Pocket Shades"
@@ -294,31 +302,23 @@ export default function PocketShades() {
 
       {/* The Packaging Experience */}
       <section className="pocket-shades__section">
-        <p className="text-heading pocket-shades__heading">
-          A little surprise inside a square box.
-        </p>
-        <p className="text-body pocket-shades__paragraph">
-          Traditional sunglasses often come in elongated packaging. For
-          Pocket Shades, I wanted to create a compact square box instead —
-          small enough that someone might wonder how a full-sized pair of
-          sunglasses could possibly fit inside.
-        </p>
-        <p className="text-body pocket-shades__paragraph">
-          When they opened the box, they'd discover the folding mechanism.
-          The packaging was meant to create a small moment of surprise while
-          reinforcing the product's portability.
-        </p>
-        <div className="pocket-shades__packaging-exploration">
-          <figure className="pocket-shades__figure pocket-shades__figure--flat">
-            <img
-              src={packagingFlat}
-              alt="Flat die-line layout of the Pocket Shades packaging, showing the Pocket Shades logo, botanical illustrations, and 'Foldable, compact, lightweight' copy"
-              className="pocket-shades__inline-image"
-            />
-            <figcaption className="text-caption pocket-shades__caption">
-              The flat packaging design — the square case, unfolded.
-            </figcaption>
-          </figure>
+        <div className="pocket-shades__packaging-top">
+          <div className="pocket-shades__packaging-intro">
+            <p className="text-heading pocket-shades__heading">
+              A little surprise inside a square box.
+            </p>
+            <p className="text-body pocket-shades__paragraph">
+              Traditional sunglasses often come in elongated packaging. For
+              Pocket Shades, I wanted to create a compact square box instead
+              — small enough that someone might wonder how a full-sized pair
+              of sunglasses could possibly fit inside.
+            </p>
+            <p className="text-body pocket-shades__paragraph">
+              When they opened the box, they'd discover the folding
+              mechanism. The packaging was meant to create a small moment of
+              surprise while reinforcing the product's portability.
+            </p>
+          </div>
           <figure className="pocket-shades__figure pocket-shades__figure--mockup">
             <img
               src={packagingDetails}
@@ -330,7 +330,19 @@ export default function PocketShades() {
             </figcaption>
           </figure>
         </div>
-        <figure className="pocket-shades__figure pocket-shades__figure--wide pocket-shades__packaging-prototype">
+
+        <figure className="pocket-shades__figure pocket-shades__figure--flat">
+          <img
+            src={packagingFlat}
+            alt="Flat die-line layout of the Pocket Shades packaging, showing the Pocket Shades logo, botanical illustrations, and 'Foldable, compact, lightweight' copy"
+            className="pocket-shades__inline-image"
+          />
+          <figcaption className="text-caption pocket-shades__caption">
+            The flat packaging design — the square case, unfolded.
+          </figcaption>
+        </figure>
+
+        <figure className="pocket-shades__figure pocket-shades__packaging-prototype">
           <img
             src={packagingPrototype}
             alt="The assembled paper packaging prototype, shown open from two angles with the folded sunglasses inside"
@@ -373,45 +385,54 @@ export default function PocketShades() {
           <p className="text-caption-2 pocket-shades__market-label">
             Proposed Distribution Strategy
           </p>
-          <Timeline
-            steps={[
-              {
-                label: "Kickstarter",
-                description:
-                  "Considered as an initial crowdfunding channel to generate interest, test demand, and support an initial production run.",
-              },
-              {
-                label: "Shopify",
-                description:
-                  "Proposed as a direct-to-consumer storefront to sell the product online.",
-              },
-            ]}
-          />
+          <div className="pocket-shades__distribution-cards">
+            <div className="distribution-card">
+              <p className="text-caption-2 distribution-card__subtitle">
+                Crowdfunding
+              </p>
+              <p className="distribution-card__title">Kickstarter</p>
+              <p className="text-caption distribution-card__description">
+                Gauge interest, test demand, and potentially support an
+                initial production run.
+              </p>
+            </div>
+            <div className="distribution-card">
+              <p className="text-caption-2 distribution-card__subtitle">
+                Direct-to-consumer
+              </p>
+              <p className="distribution-card__title">Shopify</p>
+              <p className="text-caption distribution-card__description">
+                A proposed online storefront where customers could purchase
+                Pocket Shades directly.
+              </p>
+            </div>
+          </div>
         </div>
 
         <div className="pocket-shades__market-group">
           <p className="text-caption-2 pocket-shades__market-label">
             Proposed Marketing Strategy
           </p>
-          <Timeline
-            steps={[
-              {
-                label: "Instagram & TikTok",
-                description:
-                  "Visually engaging content and short-form videos demonstrating the folding mechanism and portability.",
-              },
-              {
-                label: "Influencer Partnerships",
-                description:
-                  "Creators whose audiences align with the intended customer base.",
-              },
-              {
-                label: "Referral Marketing",
-                description:
-                  "Early customers encouraged to introduce the product to others.",
-              },
-            ]}
-          />
+          <div className="pocket-shades__marketing-notes">
+            <PaperNote
+              title="Instagram & TikTok"
+              description="Short-form videos demonstrating the folding mechanism and portability."
+              color="#e8a85f"
+              rotation={-2}
+            />
+            <PaperNote
+              title="Influencer Partnerships"
+              description="Collaborations with travel and lifestyle creators whose audiences align with Pocket Shades."
+              color="#9aa178"
+              rotation={1}
+            />
+            <PaperNote
+              title="Referral Marketing"
+              description="Encouraging early customers to introduce Pocket Shades to others."
+              color="#f1dc96"
+              rotation={-1}
+            />
+          </div>
         </div>
 
         <p className="text-caption pocket-shades__note">
@@ -432,7 +453,7 @@ export default function PocketShades() {
           marketing strategy.
         </p>
         <p className="text-body pocket-shades__paragraph">
-          Pocket Shades was awarded Hardware Entrepreneur Winner at Cornell
+          🏆 Pocket Shades was awarded Hardware Entrepreneur Winner at Cornell
           Tech's Physical Entrepreneurship Bootcamp.
         </p>
         <figure className="pocket-shades__figure pocket-shades__outcome-award">

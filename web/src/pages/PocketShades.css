@@ -1,3 +1,14 @@
+.pocket-shades__giant-header {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+}
+
+.pocket-shades__giant-header-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 .pocket-shades__section {
   max-width: var(--content-max-width);
   width: 100%;
@@ -94,23 +105,31 @@
   margin-top: 8px;
 }
 
-.pocket-shades__packaging-exploration {
+.pocket-shades__packaging-top {
   display: flex;
   align-items: flex-start;
-  gap: 32px;
-  margin-top: 8px;
+  gap: 40px;
+}
+
+.pocket-shades__packaging-intro {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pocket-shades__packaging-top .pocket-shades__figure--mockup {
+  flex: 0 0 calc(40% - 40px);
+  margin-left: auto
 }
 
 .pocket-shades__figure--flat {
-  flex: 0 0 calc(40% - 16px);
-}
-
-.pocket-shades__figure--mockup {
-  flex: 0 0 calc(60% - 16px);
+  max-width: 42%;
 }
 
 .pocket-shades__packaging-prototype {
-  margin-top: 24px;
+  align-self: flex-end;
+  max-width: 68%;
 }
 
 .pocket-shades__staggered-gallery {
@@ -165,6 +184,44 @@
   border-radius: 8px;
 }
 
+.pocket-shades__distribution-cards {
+  display: flex;
+  gap: 24px;
+}
+
+.distribution-card {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: #faf8f3;
+  border: 1px solid var(--color-divider-light);
+  border-radius: 8px;
+  padding: 32px 28px;
+}
+
+.distribution-card__subtitle {
+  opacity: 0.6;
+}
+
+.distribution-card__title {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.distribution-card__description {
+  opacity: 0.75;
+  margin-top: 4px;
+}
+
+.pocket-shades__marketing-notes {
+  display: flex;
+  gap: 32px;
+  padding-top: 16px;
+}
+
 .pocket-shades__links {
   max-width: var(--content-max-width);
   width: 100%;
@@ -197,13 +254,19 @@
     align-self: center !important;
   }
 
-  .pocket-shades__packaging-exploration {
+  .pocket-shades__packaging-top {
     flex-direction: column;
   }
 
-  .pocket-shades__figure--flat,
-  .pocket-shades__figure--mockup {
+  .pocket-shades__packaging-intro,
+  .pocket-shades__packaging-top .pocket-shades__figure--mockup {
     flex: 1 1 auto;
+  }
+
+  .pocket-shades__figure--flat,
+  .pocket-shades__packaging-prototype {
+    max-width: 100%;
+    align-self: center;
   }
 
   .pocket-shades__market-group--with-visual {
@@ -214,5 +277,10 @@
 
   .pocket-shades__market-visual {
     max-width: 240px;
+  }
+
+  .pocket-shades__distribution-cards,
+  .pocket-shades__marketing-notes {
+    flex-direction: column;
   }
 }

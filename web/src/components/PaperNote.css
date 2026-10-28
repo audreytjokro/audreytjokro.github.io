@@ -1,0 +1,66 @@
+.paper-note {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 30px 22px 22px;
+  border-radius: 2px;
+  transform: rotate(var(--paper-rotation));
+  box-shadow:
+    0 10px 20px rgba(40, 30, 10, 0.14),
+    0 2px 5px rgba(40, 30, 10, 0.1);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .paper-note {
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+}
+
+.paper-note:hover {
+  transform: translateY(-4px) rotate(calc(var(--paper-rotation) * 0.3));
+  box-shadow:
+    0 16px 28px rgba(40, 30, 10, 0.18),
+    0 4px 8px rgba(40, 30, 10, 0.12);
+}
+
+.paper-note__clip {
+  position: absolute;
+  top: -27px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 34px;
+  height: auto;
+  z-index: 1;
+  filter: drop-shadow(0 1px 1.5px rgba(30, 20, 5, 0.4));
+}
+
+.paper-note__title {
+  font-family: var(--font-serif);
+  font-size: 21px;
+  font-weight: 400;
+  line-height: 1.2;
+  color: #2b2419;
+  margin-bottom: 12px;
+}
+
+.paper-note__divider {
+  height: 1px;
+  background: rgba(35, 28, 15, 0.18);
+  margin-bottom: 14px;
+}
+
+.paper-note__description {
+  color: rgba(35, 28, 15, 0.72);
+}
+
+@media (max-width: 900px) {
+  .paper-note {
+    transform: none;
+  }
+
+  .paper-note:hover {
+    transform: none;
+  }
+}

@@ -3,21 +3,22 @@ import Button from "../components/Button";
 import echoesOfItalyThumbnail from "../assets/echoes-of-italy/image-05-venice.webp";
 import smellMlThumbnail from "../assets/smell-and-machine-learning/hero-cyranose-flowers.webp";
 import redTeamingThumbnail from "../assets/red-teaming-clinical-llms/thumbnail-clinical-llm-chat.webp";
+import pocketShadesThumbnail from "../assets/pocket-shades/thumbnail.webp";
 import "./Home.css";
 
 const projects = [
     {
     category: "Work Experience",
     title: "Building products at Flywheel",
-    color: "var(--color-accent-pink)",
-    buttonColor: "var(--color-accent-pink)",
+    color: "var(--color-accent-blue)",
+    buttonColor: "var(--color-accent-blue)",
     to: "/project/building-products-at-flywheel",
     noThumbnail: true,
   },
   {
     category: "Research",
     title: "Smell and machine learning",
-    color: "var(--color-accent-blue)",
+    color: "var(--color-accent-pink)",
     to: "/project/smell-and-machine-learning",
     image: {
       src: smellMlThumbnail,
@@ -37,13 +38,17 @@ const projects = [
   {
     category: "Design",
     title: "Pocket Shades",
-    color: "var(--color-accent-blue)",
+    color: "var(--color-accent-purple)",
     to: "/project/pocket-shades",
+    image: {
+      src: pocketShadesThumbnail,
+      alt: "Folded black Pocket Shades sunglasses next to their packaging, illustrated with botanical leaf patterns",
+    },
   },
   {
     category: "Photography",
     title: "Echoes of Italy",
-    color: "var(--color-accent-purple)",
+    color: "var(--color-accent-blue)",
     to: "/project/echoes-of-italy",
     image: {
       src: echoesOfItalyThumbnail,
