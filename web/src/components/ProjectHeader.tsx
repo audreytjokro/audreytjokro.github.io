@@ -9,6 +9,7 @@ type ProjectHeaderProps = {
   category: string;
   title: string;
   subtitle: string;
+  intro?: string[];
   meta: MetaItem[];
 };
 
@@ -16,6 +17,7 @@ export default function ProjectHeader({
   category,
   title,
   subtitle,
+  intro,
   meta,
 }: ProjectHeaderProps) {
   return (
@@ -24,6 +26,11 @@ export default function ProjectHeader({
         <p className="text-caption-3 project-header__category">{category}</p>
         <p className="text-heading project-header__title">{title}</p>
         <p className="text-body project-header__subtitle">{subtitle}</p>
+        {intro?.map((paragraph) => (
+          <p className="text-body project-header__intro" key={paragraph}>
+            {paragraph}
+          </p>
+        ))}
       </div>
       <div className="project-header__meta">
         {meta.map((item) => (

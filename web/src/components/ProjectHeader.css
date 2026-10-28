@@ -27,6 +27,11 @@
   max-width: 640px;
 }
 
+.project-header__intro {
+  max-width: 640px;
+  opacity: 0.85;
+}
+
 .project-header__meta {
   flex: 0 1 35%;
   border-left: 1px solid var(--color-divider-light);

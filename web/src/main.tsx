@@ -9,6 +9,7 @@ import Project from "./pages/Project";
 import SmellAndMachineLearning from "./pages/SmellAndMachineLearning";
 import Flywheel from "./pages/Flywheel";
 import RedTeamingClinicalLLMs from "./pages/RedTeamingClinicalLLMs";
+import PocketShades from "./pages/PocketShades";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -30,6 +31,7 @@ createRoot(document.getElementById("root")!).render(
             path="project/red-teaming-clinical-llms"
             element={<RedTeamingClinicalLLMs />}
           />
+          <Route path="project/pocket-shades" element={<PocketShades />} />
         </Route>
       </Routes>
     </BrowserRouter>

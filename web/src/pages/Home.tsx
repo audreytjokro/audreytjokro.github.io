@@ -6,6 +6,14 @@ import redTeamingThumbnail from "../assets/red-teaming-clinical-llms/thumbnail-c
 import "./Home.css";
 
 const projects = [
+    {
+    category: "Work Experience",
+    title: "Building products at Flywheel",
+    color: "var(--color-accent-pink)",
+    buttonColor: "var(--color-accent-pink)",
+    to: "/project/building-products-at-flywheel",
+    noThumbnail: true,
+  },
   {
     category: "Research",
     title: "Smell and machine learning",
@@ -15,14 +23,6 @@ const projects = [
       src: smellMlThumbnail,
       alt: "The Cyranose 320 electronic nose held up to flowers, with a speech bubble asking 'Hmm.. Are these flowers?'",
     },
-  },
-  {
-    category: "Product Management",
-    title: "Building and launching products",
-    color: "var(--color-accent-pink)",
-    buttonColor: "var(--color-accent-pink)",
-    to: "/project/building-products-at-flywheel",
-    noThumbnail: true,
   },
   {
     category: "Research",
@@ -35,6 +35,12 @@ const projects = [
     },
   },
   {
+    category: "Design",
+    title: "Pocket Shades",
+    color: "var(--color-accent-blue)",
+    to: "/project/pocket-shades",
+  },
+  {
     category: "Photography",
     title: "Echoes of Italy",
     color: "var(--color-accent-purple)",
@@ -45,12 +51,6 @@ const projects = [
     },
     buttonText: "Explore",
   },
-  // Commented out for now — bring back when there's a real project to show here.
-  // {
-  //   category: "Design",
-  //   title: "Castro Capital branding",
-  //   color: "var(--color-accent-blue)",
-  // },
 ];
 
 export default function Home() {

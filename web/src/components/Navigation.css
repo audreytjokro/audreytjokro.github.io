@@ -2,16 +2,21 @@
   position: sticky;
   top: 0;
   z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 24px var(--page-gutter);
   background: linear-gradient(
     to bottom,
     rgba(255, 255, 255, 0.85),
     rgba(255, 255, 255, 0.4)
   );
   backdrop-filter: blur(4px);
+}
+
+.nav__inner {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px var(--page-gutter);
 }
 
 .nav__name {
