@@ -22,7 +22,7 @@ const exploreItems = [
     title: "Favorite books",
     color: "var(--color-accent-olive)",
     buttonText:
-      "Some of my favorite books! In-depth reviews of my books are on my Goodreads account.",
+      "My reviews and reading activity on Goodreads",
     href: "https://www.goodreads.com/user/show/17700379-audrey-tjokro",
     image: {
       src: booksThumbnail,
@@ -49,13 +49,13 @@ export default function About() {
         <p className="text-heading">
           I'm a technical product manager experienced with launching and
           building features for an AI-powered e-commerce platform. Also, a
-          budding researcher / engineer with hands-on experience in computer
-          vision, ML systems, and hardware optimization. I thrive in
+          budding researcher and engineer with hands-on experience in computer
+          vision and ML systems. I thrive in
           collaborative environments, where ideas can bounce and evolve.
         </p>
         <p className="text-heading">
           I love the challenge of taking a concept and translating it into a
-          compelling visual experience. Whether I'm sketching, photographing,
+          compelling visual experience. Whether I'm sketching, taking pictures,
           or designing, I'm always searching for ways to connect with people
           on a deeper level through my work.
         </p>
@@ -84,7 +84,7 @@ export default function About() {
       </section>
 
       <ExploreMore
-        intro="From graphic design to interior spaces, see the breadth of my creative explorations."
+        intro="From painting to photography, see the breadth of my creative explorations."
         items={exploreItems}
       />
     </div>
