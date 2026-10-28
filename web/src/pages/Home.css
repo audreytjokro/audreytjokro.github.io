@@ -7,6 +7,8 @@
 
 .home__intro p {
   max-width: 1000px;
+  font-size: 42px;
+  letter-spacing: -2px;
 }
 
 .home__closing {
@@ -26,5 +28,10 @@
 @media (max-width: 900px) {
   .home__intro {
     padding: 100px var(--page-gutter) 40px;
+  }
+
+  .home__intro p {
+    font-size: 30px;
+    letter-spacing: -1.3px;
   }
 }

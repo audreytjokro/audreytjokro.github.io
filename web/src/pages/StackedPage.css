@@ -15,8 +15,18 @@
   gap: 24px;
 }
 
+.stacked-page__section--stack .text-heading {
+  font-size: 42px;
+  letter-spacing: -2px;
+}
+
 @media (max-width: 900px) {
   .stacked-page {
     padding: 100px var(--page-gutter) 40px;
+  }
+
+  .stacked-page__section--stack .text-heading {
+    font-size: 30px;
+    letter-spacing: -1.3px;
   }
 }
