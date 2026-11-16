@@ -1,6 +1,6 @@
 import InfoList from "../components/InfoList";
 import ExploreMore from "../components/ExploreMore";
-import aboutPhoto from "../assets/about/audrey-brooklyn-bridge.webp";
+import aboutPhoto from "../assets/about/audrey-cherry-blossoms.webp";
 import booksThumbnail from "../assets/about/books-ive-read.webp";
 import watercolorThumbnail from "../assets/about/watercolor-paintings.webp";
 import echoesOfItalyThumbnail from "../assets/echoes-of-italy/image-05-venice.webp";
@@ -66,7 +66,7 @@ export default function About() {
           heading="Right now I am..."
           image={{
             src: aboutPhoto,
-            alt: "Audrey smiling on the Brooklyn waterfront, with the Brooklyn Bridge and Manhattan skyline behind her",
+            alt: "Audrey smiling under cherry blossoms along the East River, with the Manhattan skyline behind her",
           }}
           rows={[
             { label: "Reading:", value: "Hollywood, Ending" },
