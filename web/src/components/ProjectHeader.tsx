@@ -1,8 +1,10 @@
 import "./ProjectHeader.css";
 
+type MetaValueItem = string | { text: string; href: string };
+
 type MetaItem = {
   label: string;
-  value: string | string[];
+  value: string | MetaValueItem[];
 };
 
 type ProjectHeaderProps = {
@@ -40,11 +42,24 @@ export default function ProjectHeader({
             </p>
             {Array.isArray(item.value) ? (
               <ul className="project-header__meta-list">
-                {item.value.map((line) => (
-                  <li className="text-caption" key={line}>
-                    {line}
-                  </li>
-                ))}
+                {item.value.map((line) =>
+                  typeof line === "string" ? (
+                    <li className="text-caption" key={line}>
+                      {line}
+                    </li>
+                  ) : (
+                    <li className="text-caption" key={line.text}>
+                      <a
+                        href={line.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="project-header__meta-link"
+                      >
+                        {line.text}
+                      </a>
+                    </li>
+                  ),
+                )}
               </ul>
             ) : (
               <p className="text-caption project-header__meta-value">

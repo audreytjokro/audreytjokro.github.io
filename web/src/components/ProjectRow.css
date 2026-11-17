@@ -26,6 +26,8 @@
 
 .project-row__title {
   margin: 0;
+  font-size: 24px;
+  letter-spacing: -1px;
 }
 
 .project-row__image {
@@ -48,5 +50,10 @@
 @media (max-width: 900px) {
   .project-row {
     padding: 40px var(--page-gutter) 50px;
+  }
+
+  .project-row__title {
+    font-size: 18px;
+    letter-spacing: -0.75px;
   }
 }

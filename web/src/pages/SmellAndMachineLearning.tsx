@@ -28,7 +28,14 @@ export default function SmellAndMachineLearning() {
           },
           {
             label: "Research Group",
-            value: ["Cornell University — Owens Lab", "Andrew Owens & Carl"],
+            value: [
+              "Cornell University — Owens Lab",
+              { text: "Andrew Owens", href: "https://andrewowens.com/" },
+              {
+                text: "Carl Vondrick",
+                href: "https://www.cs.columbia.edu/~vondrick/",
+              },
+            ],
           },
           {
             label: "Technologies",

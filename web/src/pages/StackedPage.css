@@ -16,8 +16,8 @@
 }
 
 .stacked-page__section--stack .text-heading {
-  font-size: 42px;
-  letter-spacing: -2px;
+  font-size: 24px;
+  letter-spacing: -1px;
 }
 
 @media (max-width: 900px) {
@@ -26,7 +26,7 @@
   }
 
   .stacked-page__section--stack .text-heading {
-    font-size: 30px;
-    letter-spacing: -1.3px;
+    font-size: 18px;
+    letter-spacing: -0.75px;
   }
 }

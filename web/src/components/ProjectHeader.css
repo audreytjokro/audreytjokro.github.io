@@ -55,6 +55,17 @@
   margin: 0;
 }
 
+.project-header__meta-link {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: var(--color-divider-light);
+}
+
+.project-header__meta-link:hover {
+  text-decoration-color: currentColor;
+}
+
 .project-header__meta-list {
   margin: 0;
   padding: 0;

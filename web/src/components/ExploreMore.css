@@ -11,6 +11,8 @@
 
 .explore-more__intro {
   max-width: 1100px;
+  font-size: 24px;
+  letter-spacing: -1px;
 }
 
 .explore-more__grid {
@@ -34,6 +36,8 @@
 
 .explore-more__title {
   margin: 0;
+  font-size: 24px;
+  letter-spacing: -1px;
 }
 
 .explore-more__button {
@@ -47,6 +51,14 @@
   aspect-ratio: 1 / 1;
   object-fit: cover;
   border-radius: 4px;
+}
+
+@media (max-width: 900px) {
+  .explore-more__intro,
+  .explore-more__title {
+    font-size: 18px;
+    letter-spacing: -0.75px;
+  }
 }
 
 .explore-more__link {

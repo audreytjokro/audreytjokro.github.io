@@ -20,15 +20,15 @@
 .footer__link {
   text-decoration: underline;
   text-underline-offset: 3px;
-  font-size: 50px;
-  letter-spacing: -2.25px;
+  font-size: 24px;
+  letter-spacing: -1px;
   font-weight: 300;
 }
 
 @media (max-width: 900px) {
   .footer__link {
-    font-size: 28px;
-    letter-spacing: -1.2px;
+    font-size: 18px;
+    letter-spacing: -0.75px;
   }
 }
 
