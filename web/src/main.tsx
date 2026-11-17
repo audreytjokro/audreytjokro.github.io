@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./index.css";
 import Layout from "./components/Layout";
 import ScrollToTop from "./components/ScrollToTop";
+import Analytics from "./components/Analytics";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Project from "./pages/Project";
@@ -16,6 +17,7 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter basename={import.meta.env.BASE_URL}>
       <ScrollToTop />
+      <Analytics />
       <Routes>
         <Route element={<Layout />}>
           <Route index element={<Home />} />
